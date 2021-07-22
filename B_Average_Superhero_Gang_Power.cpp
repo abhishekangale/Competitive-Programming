@@ -94,32 +94,19 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n;
-    cin>>n;
-    vi a(n+1);
-    vi vis(n+1,0);
-    for(int i=1;i<=n;i++){
-        cin>>a[i];
-        vis[a[i]]++;
+    int n,k,m;
+    cin>>n>>k>>m;
+    vi a(n);
+    double sum=0;
+    for(auto &i:a)cin>>i,sum+=i;
+    double avg = (double)(sum + min(m,n*k))/(double)n;
+    sort(all(a));
+    for(int i=0;i<min(n-1,m);i++){
+         sum-=a[i];
+        double newavg = double(sum + min(m-i-1,((n-i-1)*k)))/(double)(n-i-1);
+        avg = max(avg,newavg);
     }
-    int ans=n,m=0,cnt=0;
-    vi b(n+1);
-    for(int i=1;i<=n;i++){
-        if(!vis[i]) {
-            b[++cnt]=i;
-            ans--;
-        }
-    }
-    for(int i=n;i>=1;i--){
-        if(vis[a[i]]>1 && b[m+1]!=i){
-            vis[a[i]]--;
-            a[i]=b[++m];
-            vis[b[m]]++;
-        }
-    }
-    cout<<ans<<'\n';
-    for(int i=1;i<=n;i++) cout<<a[i]<<" ";
-    cout<<'\n';
+    cout<<avg;
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -128,7 +115,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();
