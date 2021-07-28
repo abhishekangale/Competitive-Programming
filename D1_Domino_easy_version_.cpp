@@ -96,34 +96,9 @@ const int mod = 1e9 + 7;
 void solve(){
     int n,m,k;
     cin>>n>>m>>k;
-    if(n==1) {cout<<(k==m/2?"YES\n":"NO\n");return;}
-    if(m==1) {cout<<(k==0?"YES\n":"NO\n");return;}
-    int h = (n*m/2);
-    if(k>h) {cout<<"NO\n";return;}
-    if(n%2==0){
-        if(k%2){
-            cout<<"NO\n";
-        }
-        else {
-            cout<<"YES\n";
-        }
-    }
-    else {
-        int mx = m/2;
-        if(k>mx){
-            k-=mx;
-            if(k%2){
-                cout<<"NO\n";
-            }
-            else {
-                cout<<"YES\n";
-            }
-        }
-        else {
-            cout<<"NO\n";
-        }
-    }
-    // cout<<"YES\n";
+    int h=k;
+    int v=(n*m)/2-h;
+    
 }
 signed main(){
     ios_base::sync_with_stdio(false);
