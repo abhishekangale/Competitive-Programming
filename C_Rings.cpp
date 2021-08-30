@@ -98,10 +98,15 @@ void solve(){
     cin>>n;
     string s;
     cin>>s;
-    int f=-1;
-    for(int i=0;i<n/2;i++){
-        
+    for(int i=0;i<n;i++){
+        if(s[i]=='0'){
+            if(i>=n/2) cout<<1<<" "<<i+1<<" "<<1<<" "<<i<<'\n';
+            else cout<<i+1<<" "<<n<<" "<<i+2<<" "<<n<<'\n';
+
+            return;
+        }
     }
+    cout<<1<<" "<<n-1<<" "<<2<<" "<<n<<'\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -110,7 +115,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();
