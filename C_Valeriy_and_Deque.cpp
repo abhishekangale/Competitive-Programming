@@ -94,21 +94,46 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,x;
-    cin>>n>>x;
-    vi a(n),b(n);
-    int dp[100005];
-    memset(dp,0,sizeof(dp));
+    int n,q;
+    cin>>n>>q;
+    vi a(n);
     for(auto &i:a)cin>>i;
-    for(auto &i:b)cin>>i;
-    for(int j=0;j<n;j++){
-        for(int i=x;i>=0;i--){
-            if(i-a[j]>=0) dp[i]=max(dp[i],dp[i-a[j]]+b[j]);
+    int mx = *max_element(all(a));
+    int found;
+    for(int i=0;i<n;i++){
+        if(a[i]==mx){
+            found = i;
+            break;
         }
     }
-    cout<<dp[x]<<'\n';
-    
-    
+    int mxx=max_element(all(a))-a.begin();
+    vi cons(n);
+    cons[0]=mx;
+    int j=1;
+    for(int i=found+1;i<n;i++){
+        cons[j]=a[i];
+        j++;
+    }
+    for(int i=0;i<found;i++){
+        cons[j]=a[i];
+        j++;
+    }
+    while(q--){
+        int x;
+        cin>>x;
+        if((x-1)<mxx){
+            // cout<<x<<" ";
+            cout<<a[x-1]<<" "<<a[x]<<'\n';
+        }
+        else {
+            x-=mxx;
+            x--;
+            x%=n;
+            // cout<< x<<" ";
+            cout<<cons[0]<<" "<<cons[(x%(n-1))+1]<<'\n';
+        }
+    }
+    // debug(cons);
 }
 signed main(){
     ios_base::sync_with_stdio(false);

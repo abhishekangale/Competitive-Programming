@@ -94,21 +94,26 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,x;
-    cin>>n>>x;
-    vi a(n),b(n);
-    int dp[100005];
-    memset(dp,0,sizeof(dp));
-    for(auto &i:a)cin>>i;
-    for(auto &i:b)cin>>i;
-    for(int j=0;j<n;j++){
-        for(int i=x;i>=0;i--){
-            if(i-a[j]>=0) dp[i]=max(dp[i],dp[i-a[j]]+b[j]);
-        }
+    int Q; cin >> Q;
+  vector<int> vec;
+  vector<int> vec_sorted;
+    while(Q--) {
+    int a; cin >> a;
+    if(a == 1) {
+      int x; cin >> x;
+      vec.push_back(x);
+      auto itr = lower_bound(all(vec_sorted), x);
+      vec_sorted.insert(itr, x);
+    } else if (a == 2) {
+      int tmp = vec[0];
+      cout << tmp << endl; 
+      vec.erase(vec.begin());
+      auto itr = lower_bound(all(vec_sorted), tmp);
+      vec_sorted.erase(itr);
+    } else {
+      copy(vec_sorted.begin(), vec_sorted.end(), vec.begin());
     }
-    cout<<dp[x]<<'\n';
-    
-    
+  }
 }
 signed main(){
     ios_base::sync_with_stdio(false);

@@ -72,7 +72,7 @@ string to_string(A v) {
     return res;
 }
 template <typename A, typename B>
-string to_string(pair<A, B> p) { return "(" + to_string(p.first) + ", " + to_string(p.second) + ")"; }
+string to_string(pair<A, B> p) { return "(" + to_string(p.firstirst) + ", " + to_string(p.second) + ")"; }
 template <typename A, typename B, typename C>
 string to_string(tuple<A, B, C> p) {
     return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ")";
@@ -92,23 +92,47 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+bool cmp(pair<string,vector<int>> X, pair<string,vector<int>> Y){
+    int sumX=0, sumY=0;
+    for(int i=0; i<4; i++){
+        sumX += X.second[i];
+        sumY += Y.second[i];
+    }
+
+    if(sumX == sumY){
+        return (X.first < Y.first);
+    }
+    else {
+        return (sumX > sumY);
+    }
+}
 void solve(){
-    int n,x;
-    cin>>n>>x;
-    vi a(n),b(n);
-    int dp[100005];
-    memset(dp,0,sizeof(dp));
-    for(auto &i:a)cin>>i;
-    for(auto &i:b)cin>>i;
-    for(int j=0;j<n;j++){
-        for(int i=x;i>=0;i--){
-            if(i-a[j]>=0) dp[i]=max(dp[i],dp[i-a[j]]+b[j]);
+    int N;
+    cin >> N;
+    vector<pair<string,vector<int>>> A(N);
+    for(int i=0; i<N; i++){
+        cin >> A[i].first;
+        int x;
+        for(int j=0; j<4; j++){
+            cin >> x;
+            A[i].second.push_back(x);
         }
     }
-    cout<<dp[x]<<'\n';
-    
-    
+
+    sort(A.begin(), A.end(), cmp);
+
+    for(int i=0; i<N; i++){
+        cout << A[i].first << " ";
+        int sum = 0;
+        for(int j=0; j<4; j++){
+            sum += A[i].second[j];
+        }
+        cout << sum << " ";
+        for(int j=0; j<4; j++){
+            cout << A[i].second[j] << " ";
+        }
+        cout << '\n';
+    }
 }
 signed main(){
     ios_base::sync_with_stdio(false);

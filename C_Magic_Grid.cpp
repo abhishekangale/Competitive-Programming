@@ -94,21 +94,46 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,x;
-    cin>>n>>x;
-    vi a(n),b(n);
-    int dp[100005];
-    memset(dp,0,sizeof(dp));
-    for(auto &i:a)cin>>i;
-    for(auto &i:b)cin>>i;
-    for(int j=0;j<n;j++){
-        for(int i=x;i>=0;i--){
-            if(i-a[j]>=0) dp[i]=max(dp[i],dp[i-a[j]]+b[j]);
+    int n;
+    cin>>n;
+    int a[n][n];
+    memset(a,0,sizeof(a));
+    // 0 1 14 15
+    // 13 12 3 2
+    // 4 5 10 11
+    // 9 8 7 6
+    int x=0;
+    for(int i=0;i<n;i++){
+        if(i%2==0){
+            for(int j=0;j<n/2;j++) {a[i][j]=x;x++;}
+        }
+        else {
+            for(int j=n-1;j>=n/2;j--) {a[i][j]=x;x++;}
         }
     }
-    cout<<dp[x]<<'\n';
+    for(int i=n-1;i>=0;i--){
+        if(i%2==1){
+            for(int j=n/2-1;j>=0;j--){
+                a[i][j]=x;x++;
+            }
+        }
+        else {
+            for(int j=n/2;j<n;j++){
+                a[i][j]=x;x++;
+            }
+        }
+    }
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cout<<a[i][j]<<" ";
+            
+        }
+        cout<<'\n';
+    }
+
+
     
-    
+
 }
 signed main(){
     ios_base::sync_with_stdio(false);
