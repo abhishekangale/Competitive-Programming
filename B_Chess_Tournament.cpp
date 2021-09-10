@@ -94,13 +94,70 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,m;
-    cin >> n >> m;
-    vi a(n);
-    for(auto &i:a)cin>>i;
-    int ans=0;
+    int n;
+    cin >> n;
+    string s;
+    cin>>s;
+    char ans[n][n];
+    memset(ans,'.',sizeof(ans));
+    for(int i=0;i<n;++i){
+        ans[i][i]='X';
+    }
+    int cnt=0;
+    vi pos;
+    for(int i=0;i<n;i++){
+        cnt+=(s[i]=='2');
+        if(s[i]=='2') pos.pb(i);
+    }
+    int m =(int)pos.size();
+    if(cnt==1 || cnt==2){
+        cout<<"NO\n";
+        return;
+    }
+    for(int i=0;i<n;i++){
+        if(s[i]=='1'){
+            for(int j=0;j<n ;j++){
+                if(i==j) continue;
+                ans[i][j]='=';
+            }
+        }
+    }
+    if(pos.empty()) {
+        goto afef;
+    }
+    // if(pos.size()==2){
+    //     ans[pos[m-1]][pos[0]]='+';
+    //     ans[pos[0]][pos[m-1]]='-';
+    //     for(int j=0;j<n;j++){
+    //         if(ans[pos[0]][j]=='.' && ans[j][pos[0]]=='.'){
+    //             ans[pos[0]][j]='+';
+    //             ans[j][pos[0]]='-';
+    //             break;
+    //         }
+    //     }
+    // }
+    {
+        for(int i=0;i<pos.size();i++){
+            ans[pos[i]][pos[(i+1)%(m)]]='+';
+            ans[pos[(i+1)%(m)]][pos[i]]='-';
+        }
+        
+    }
     
-
+   
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(ans[i][j]=='.') ans[i][j]='=';
+        }
+    }
+    afef:
+      cout<<"YES\n";
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cout<<ans[i][j];
+        }
+        cout<<'\n';
+    }
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -109,7 +166,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

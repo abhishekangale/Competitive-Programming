@@ -94,13 +94,15 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,m;
-    cin >> n >> m;
-    vi a(n);
-    for(auto &i:a)cin>>i;
-    int ans=0;
-    
-
+    int n,m,k;
+    vi x(n),y(n);
+    for(auto &i:x)cin>>i;
+    for(auto &i:y)cin>>i;
+    vpii person(k);
+    for(auto &i:person){
+        cin>>i.F>>i.S;
+    }
+    //
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -109,7 +111,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

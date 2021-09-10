@@ -94,13 +94,25 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,m;
-    cin >> n >> m;
-    vi a(n);
-    for(auto &i:a)cin>>i;
-    int ans=0;
-    
-
+    int n,k;
+    cin >> n >>k;
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
+    if(k<=n || n==4){
+        cout<<-1;
+        return;
+    }
+    set<int> nums;
+    for(int i=1;i<=n;i++){
+        if(i==a || i==b || i==c || i==d) continue;
+        nums.insert(i);
+    }
+    cout << a << " " << c <<" ";
+    for(auto i:nums) cout<<i<<" ";
+    cout << d <<" "<< b<<'\n';
+    cout << c<< " " << a<<" ";
+    for(auto i:nums) cout<<i<<" ";
+    cout<<b<<" "<<d<<" ";
 }
 signed main(){
     ios_base::sync_with_stdio(false);

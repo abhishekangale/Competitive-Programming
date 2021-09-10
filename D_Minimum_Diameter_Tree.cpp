@@ -94,13 +94,9 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,m;
-    cin >> n >> m;
-    vi a(n);
-    for(auto &i:a)cin>>i;
-    int ans=0;
+    int n; double s;
+    cin >> n >> s;  
     
-
 }
 signed main(){
     ios_base::sync_with_stdio(false);

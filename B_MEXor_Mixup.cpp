@@ -92,15 +92,40 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
+int computeXOR(int n)
+{
+   
+  // If n is a multiple of 4
+  if (n % 4 == 0)
+    return n;
  
-void solve(){
-    int n,m;
-    cin >> n >> m;
-    vi a(n);
-    for(auto &i:a)cin>>i;
-    int ans=0;
-    
+  // If n%4 gives remainder 1
+  if (n % 4 == 1)
+    return 1;
+ 
+  // If n%4 gives remainder 2
+  if (n % 4 == 2)
+    return n + 1;
+ 
+  // If n%4 gives remainder 3
+  return 0;
+}
 
+void solve(){
+    int a,b;
+    cin >> a >> b;
+    int xo=computeXOR(a-1);
+    // debug(xo);
+    if(xo==b){
+        cout<<(a)<<'\n';
+        return;
+    }
+    if((xo^b)==a){
+        cout<<a+2<<'\n';
+    }
+    else {
+        cout<<a+1<<'\n';
+    }
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -109,7 +134,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

@@ -94,13 +94,16 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,m;
-    cin >> n >> m;
-    vi a(n);
-    for(auto &i:a)cin>>i;
-    int ans=0;
-    
+    string s;
+    cin>>s;
+    string x="0",y="0";
+    for(int i=0;i<s.size();i++){
+        if(i%2) x+=s[i];
+        else y+=s[i];
+    }
 
+    int a=stoll(x),b=stoll(y);
+    cout<<(a+1)*(b+1)-2<<'\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -109,7 +112,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

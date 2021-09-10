@@ -92,15 +92,11 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
-void solve(){
-    int n,m;
-    cin >> n >> m;
-    vi a(n);
-    for(auto &i:a)cin>>i;
-    int ans=0;
-    
 
+void solve(){
+    int x=999903451,y=x;
+    cout<<sqrt(x*x - 4*y)<<" "<<(int)sqrt(x*x - 4*y);
+    // debug(ans);
 }
 signed main(){
     ios_base::sync_with_stdio(false);
