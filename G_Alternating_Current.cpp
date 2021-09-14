@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-
 using namespace __gnu_pbds;
 using namespace std;
  
@@ -95,9 +94,25 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n; double s;
-    cin >> n >> s;  
-    
+    string s;
+    cin >> s;
+    int n = s.size();
+    vector<char> A;
+    for(int i = 0; i < n; i++){
+        if(A.empty()){
+            A.push_back(s[i]);
+        }
+        else {
+            if(A.back()==s[i]){
+                A.pop_back();
+            }
+            else {
+                A.push_back(s[i]);
+            }
+        }
+    }
+    if(A.empty()) cout << "Yes";
+    else cout << "No";
 }
 signed main(){
     ios_base::sync_with_stdio(false);

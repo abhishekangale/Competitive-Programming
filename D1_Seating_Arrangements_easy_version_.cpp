@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-
 using namespace __gnu_pbds;
 using namespace std;
  
@@ -93,11 +92,27 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+
+
+
 void solve(){
-    int n; double s;
-    cin >> n >> s;  
-    
+    int n,m;
+    cin >> n >> m;
+
+    vi A(m);
+    for(auto &i:A)cin >> i;
+    int ans = 0;
+    multiset<int> B;
+    for(int i=0;i<m;i++){
+        B.insert(A[i]);
+        int ff=0;
+        for(auto j:B){
+            if(j<A[i]) ff++;
+            else break;
+        }
+        ans+=ff;
+    }
+    cout << ans <<'\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -106,7 +121,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

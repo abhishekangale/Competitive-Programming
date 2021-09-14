@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-
 using namespace __gnu_pbds;
 using namespace std;
  
@@ -93,11 +92,47 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
-void solve(){
-    int n; double s;
-    cin >> n >> s;  
+int n,m; 
+char grid[1005][1005];
+
+bool vis[1005][1005];
+
+
+bool valid(int i,int j){
+    if(!vis[i][j] && grid[i][j]=='.'){
+        return true;
+    }
+    return false;
+}
+void dfs(int i,int j){
+    vis[i][j]=1;
+    if( valid(i+1,j))dfs(i+1,j);
+    if( valid(i-1,j))dfs(i-1,j);
+    if( valid(i,j+1))dfs(i,j+1);
+    if( valid(i,j-1))dfs(i,j-1);
     
+}
+void solve(){
+    int ans = 0;
+    cin >> n >> m;
+    
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=m; j++){
+            cin >> grid[i][j];
+            vis[i][j]=0;
+        }
+    }
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=m; j++){
+            if(grid[i][j]=='.' && !vis[i][j]){
+                dfs(i,j);
+                ans++;
+            }
+        }
+    }
+
+    cout << ans;
+
 }
 signed main(){
     ios_base::sync_with_stdio(false);

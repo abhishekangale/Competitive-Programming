@@ -94,7 +94,7 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    
+   
 }
 signed main(){
     ios_base::sync_with_stdio(false);

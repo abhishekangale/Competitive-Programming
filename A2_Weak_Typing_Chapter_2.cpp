@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-
 using namespace __gnu_pbds;
 using namespace std;
  
@@ -95,9 +94,45 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n; double s;
-    cin >> n >> s;  
+
+    int n;
+    cin >> n;
+
+    string s;
+    cin >> s;
+
+    vi dp(n,0);
     
+    char last = 'T';
+    int track = -1, ans=0;
+    for(int i=0; i<n; i++){
+        if(s[i] == 'X'){
+            if(last == 'T'){
+                track = i;
+            }
+            else if(last == 'O'){
+                dp[i] = track + 1;
+            }
+            last = s[i];
+            track = i;
+        }
+        else if(s[i] == 'O'){
+            if(last == 'T'){
+                track = i;
+            }
+            else if(last == 'X'){
+                dp[i] = track + 1;
+            }
+            last = s[i];
+            track = i;
+        }
+        if(i > 0)dp[i] += dp[i-1];
+        dp[i] %= mod;
+        ans += dp[i];
+        ans %= mod;
+    }
+    
+    cout << ans <<'\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -106,9 +141,9 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
-    
-    while(tt--){
+	cin >> tt;
+    for (auto case_num = 1; case_num <= tt; ++ case_num) {
+        cout << "Case #" << case_num << ": ";
         solve();
     }
 }

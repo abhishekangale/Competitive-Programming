@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-
 using namespace __gnu_pbds;
 using namespace std;
  
@@ -95,9 +94,29 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n; double s;
-    cin >> n >> s;  
+    int n,m,a,b;
+    cin >> n >> m >> a >> b;
+    int mx = (n + m - 1);
+    if(mx > a || mx > b){
+        cout << "Impossible\n";
+        return;
+    }
+    cout << "Possible\n";
+    int ans[n][m];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            ans[i][j]=1;
+        }
+    }
+    ans[0][0]=(a-mx+1);
+    ans[0][m-1]=(b-mx+1);
     
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cout<<ans[i][j]<<" ";
+        }
+        cout<<'\n';
+    }
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -106,9 +125,9 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
-    
-    while(tt--){
+	cin >> tt;
+    for (auto case_num = 1; case_num <= tt; ++ case_num) {
+        cout << "Case #" << case_num << ": ";
         solve();
     }
 }
