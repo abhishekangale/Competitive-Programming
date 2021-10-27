@@ -96,12 +96,12 @@ const int mod = 1e9 + 7;
 void solve(){
     int n;
     cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    for(int i=0; i<n; i++){
+        int x;
+        cin >> x;
+        cout << (x-1) << " ";
     }
+    cout << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);

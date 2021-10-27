@@ -94,14 +94,33 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+   int n;
+   cin >> n;
+   vector<pair<int,int>> x,y;
+   for(int i=0; i<n; i++){
+       int p,q,r,s;
+       cin >> p >> q >> r >> s;
+       x.pb({p,r});
+       y.pb({q,s});
+   }    
+   sort(all(x));
+   sort(all(y));
+    if(n==1){
+        cout << x[0].F << " " << y[0].F << '\n';
     }
+    else {
+        if(n%2==0){
+            cout << (x[n/2 -1 ].F + x[n/2 - 1].S)/2 << " " <<  (y[n/2 -1 ].F + y[n/2 - 1].S)/2 << '\n';
+        }
+        else {
+            double xi = (double)(x[(n-1)/2 -1 ].F + x[(n-1)/2 - 1].S +1)/2 + (double)(x[(n+1)/2 -1 ].F + x[(n+1)/2 - 1].S +1)/2;
+            double yi = (double)(y[(n-1)/2 -1 ].F + y[(n-1)/2 - 1].S+1)/2 + (double)(y[(n+1)/2 -1 ].F + y[(n+1)/2 - 1].S+1)/2;
+            xi/=2;
+            yi/=2;
+            cout << (int)xi << " " << (int)yi << '\n';
+        }
+    }
+
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -110,9 +129,9 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
-    
-    while(tt--){
+	cin >> tt;
+    for (auto case_num = 1; case_num <= tt; ++ case_num) {
+        cout << "Case #" << case_num << ": ";
         solve();
     }
 }

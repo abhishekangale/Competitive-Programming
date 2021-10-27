@@ -96,12 +96,33 @@ const int mod = 1e9 + 7;
 void solve(){
     int n;
     cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    string s;
+    cin >> s;
+    int ans = INT_MAX;
+    bool poss=0;
+    for(char i='a';i<='z';i++){
+        string xd;
+        int l=0,r=n-1;
+        int cnt=0;
+        bool f=1;
+        while(l <= r){
+            if(s[l]!=s[r]){
+                if(s[l]==i) {l++;cnt++;}
+                else if(s[r]==i){r--;cnt++;}
+                else {f=0;break;}
+            }
+            else {
+                l++;
+                r--;
+            }
+        }
+        if(f){
+            poss=1;
+            ans=min(ans,cnt);
+        }
     }
+    if(poss)cout << ans << '\n';
+    else cout << -1 << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);

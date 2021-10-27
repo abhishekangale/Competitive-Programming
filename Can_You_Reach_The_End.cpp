@@ -96,12 +96,19 @@ const int mod = 1e9 + 7;
 void solve(){
     int n;
     cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    vpii a(n);
+    for(auto &i:a)cin>>i.F>>i.S;
+    vi go(2*n+3,0);
+    for(auto i:a){
+        go[i.F+i.S]++;
     }
+    for(int i=2;i<=2*n;i++){
+        if(go[i]==i-1 || go[i] == 2*n-i+1){
+            cout << "NO\n";
+            return;
+        }
+    }
+    cout << "YES\n";
 }
 signed main(){
     ios_base::sync_with_stdio(false);

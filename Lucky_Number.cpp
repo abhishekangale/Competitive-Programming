@@ -94,14 +94,10 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
-    }
+    int a,b,c;
+    cin >> a >> b >> c;
+    if(a==7 || b==7 || c==7) cout << "YES\n";
+    else cout << "NO\n";
 }
 signed main(){
     ios_base::sync_with_stdio(false);

@@ -94,14 +94,9 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
-    }
+    int n,k;
+    cin >> n >> k;
+    cout << ((n-k)+(k-1)/2)*2 << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);

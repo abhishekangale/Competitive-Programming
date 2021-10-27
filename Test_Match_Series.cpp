@@ -94,14 +94,16 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    int one=0,two=0;
+    for(int i=0; i<5; i++){
+        int x;
+        cin >> x;
+        one+=(x==1);
+        two+=(x==2);
     }
+    if(one > two) cout << "INDIA\n";
+    else if(two > one) cout << "ENGLAND\n";
+    else cout << "DRAW\n";
 }
 signed main(){
     ios_base::sync_with_stdio(false);

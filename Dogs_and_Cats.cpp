@@ -94,14 +94,32 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n;
+   int n;
     cin >> n;
-    int d;
-    cin >> d;
+    int d,c,m;
+    cin >> d >> c >> m;
+    string s;
+    cin >> s;
     int i=0;
-    while(1){
-        
+    for(i; i<n; i++){
+        if(s[i]=='D'){
+            d--;
+            c+=m;
+        }
+        else {
+            c--;
+        }
+        if(d<0 || c<0){
+            break;
+        }
     }
+    for(i;i<n;i++){
+        if(s[i]=='D'){
+            cout << "NO\n";
+            return;
+        }
+    }
+    cout << "YES\n";
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -110,9 +128,9 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
-    
-    while(tt--){
+	cin >> tt;
+    for (auto case_num = 1; case_num <= tt; ++ case_num) {
+        cout << "Case #" << case_num << ": ";
         solve();
     }
 }

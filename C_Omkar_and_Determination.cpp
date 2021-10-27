@@ -94,14 +94,78 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    int n,m;
+    cin >> n >> m;
+    vector<vector<char>> a(n,vector<char> (m));
+    for(auto &i:a){
+        for(auto &j:i){
+            cin >> j;
+        }
     }
+    vvi pref(n,vi (m,mod));
+    for(int j=0;j<m;j++){
+        for(int i=0;i<n;i++){
+            if(a[i][j]=='.'){
+                pref[i][j]=mod-1;
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    for(int i=0;i<n;i++){
+        int indx=mod-1;
+        for(int j=0;j<m;j++){
+            if(a[i][j]=='.'){
+                if(pref[i][j]!=mod-1){
+                    pref[i][j]=indx;
+                }
+                if(i>0 && a[i-1][j]=='.'){
+                    if(pref[i-1][j]==mod-1){
+                        pref[i][j]=mod-1;
+                    }
+                    else {
+                        pref[i][j]=min(pref[i][j],pref[i-1][j]);
+                    }
+                }
+                if(j>0 && a[i][j-1]=='.'){
+                    if(pref[i][j-1]==mod-1){
+                        pref[i][j-1]=mod-1;
+                    }
+                    else {
+                        pref[i][j]=min(pref[i][j],pref[i][j-1]);
+                    }
+                }
+            }
+            else {
+                indx=j;
+            }
+        }
+    }
+    vi mn(m,1e7);
+    for(int j=0; j<m; j++){
+        for(int i=0;i<n;i++){
+            mn[j]=min(mn[j],pref[i][j]);
+            
+        }
+    }
+    debug(mn);
+    int q;
+    cin >> q;
+    while(q--){
+        int x,y;
+        cin >> x >> y;
+        --x,--y;
+        if(mn[y]==1e7 || x > mn[y]){
+            cout << "YES\n";
+        }
+        else {
+            cout << "NO\n";
+        }
+    }
+
+
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -110,7 +174,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

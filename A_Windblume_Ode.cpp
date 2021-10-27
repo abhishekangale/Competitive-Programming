@@ -96,12 +96,44 @@ const int mod = 1e9 + 7;
 void solve(){
     int n;
     cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    int sum=0;
+    vi a(n);
+    for(auto &i:a)cin>>i,sum+=i;
+    if(sum%2==0){
+        cout << n << '\n';
+        for(int i=0;i<n;i++){
+                cout << i+1 << " ";
+            }
+        cout << '\n';
     }
+    else {
+        bool f=0;
+        for(int i=2;i*i<=sum;i++){
+            if(sum%i==0){
+                f=1;
+            }
+        }
+        if(f){
+            cout << n << '\n';
+            for(int i=0;i<n;i++){
+                cout << i+1 << " ";
+            }
+            cout << '\n';
+        }
+        else {
+            bool f1=0;
+            cout << n-1 << '\n';
+            for(int i=0;i<n;i++){
+                if(a[i]%2 && !f){
+                    f=1;
+                    continue;
+                }
+                cout << i+1 << " ";
+            }
+            cout << '\n';
+        }
+    }
+
 }
 signed main(){
     ios_base::sync_with_stdio(false);

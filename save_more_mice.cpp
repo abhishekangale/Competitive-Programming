@@ -92,16 +92,27 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+#define ll long long
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    ll n , x , c = 0 , count = 0 , M = 0 , z = 0 ;
+    cin >> n >> x ;
+    vector<ll>v(x) ;
+    for(auto &A:v) cin >> A ;
+    sort(all(v)) ;
+    ll i = x - 1 ;
+    while(M<=i){
+        v[i]++ ;
+        if(v[i]==n){
+            count++ ;
+            i-- ;
+        }
+        c++ ;
+            while(c==v[z]){
+                M++ ;
+                z++ ;
+            }
     }
+    cout << count << '\n' ;
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -110,7 +121,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

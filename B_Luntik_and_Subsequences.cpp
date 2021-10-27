@@ -96,12 +96,18 @@ const int mod = 1e9 + 7;
 void solve(){
     int n;
     cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    vi a(n);
+    for(auto &i:a)cin>>i;
+    int cnt1=0,cnt=0;
+    for(auto i:a){
+        cnt1+=(i==1);
+        cnt+=(i==0);
     }
+    int poww=1;
+    for(int i=0;i<cnt;i++){
+        poww*=2;
+    }
+    cout << cnt1 * poww << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);

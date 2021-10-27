@@ -92,16 +92,30 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
-void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+#define ll long long
+ll binpow(ll a, ll b, ll m) {
+    a %= m;
+    ll res = 1;
+    while (b > 0) {
+        if (b & 1)
+            res = (res * a) % m;
+        a = (a * a) % m;
+        b >>= 1;
     }
+    return res;
+} 
+void solve(){
+    int a;
+    string b;
+    cin >> a >> b;
+    // b % mod -> 10023 -> dig * st -> (6 * 10^10) %mod ->  6%mod * (10^10 % mod)
+    
+    int st=1,res=0;
+    for(int i=0; i<(int)b.size(); i++){
+        int dig = b[i] - '0';
+        res = (res*10 + dig)%mod;
+    }
+    cout << binpow(a,res,mod) << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -110,7 +124,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    // cin >> tt;
     
     while(tt--){
         solve();

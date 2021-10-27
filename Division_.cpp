@@ -1,152 +1,68 @@
-#include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
-using namespace std;
- 
-template <typename T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-// oset Operations: order_of_key(k) -> Number of elements strictly smaller than k, find_by_order(k) -> kth element in the set
- 
-#define ull unsigned long long int
-#define int long long int
-#define pb push_back
-#define eb emplace_back
-#define all(x) x.begin(),x.end()
-#define pii pair<int, int>
-#define pll pair<ll, ll>
-#define vi vector<int>
-#define vb vector<bool>
-#define vd vector<double>
-#define vll vector<ll>
-#define vpii vector<pii>
-#define vpll vector<pll>
-#define vvi vector<vi>
-#define vvll vector<vll>
-#define vvb vector<vb>
-#define vs vector<string>
-#define pull pair<ull, ull>
-#define F first
-#define S second
-#define m_p make_pair
- 
-const long double PI = 3.141592653589793238462643383279502884197169399;
- 
-template <typename A, typename B> string to_string(pair<A, B> p);
-template <typename A, typename B, typename C> string to_string(tuple<A, B, C> p);
-string to_string(const string& s) { return '"' + s + '"'; }
-string to_string(const char* s) { return to_string((string) s); }
-string to_string(bool b) { return (b ? "true" : "false"); }
-string to_string(vector<bool> v) {
-    bool first = true;
-    string res = "{";
-    for (int i = 0; i < static_cast<int>(v.size()); i++) {
-        if (!first) {
-            res += ", ";
-        }
-        first = false;
-        res += to_string(v[i]);
-    }
-    res += "}";
-    return res;
-}
-template <size_t N>
-string to_string(bitset<N> v) {
-    string res = "";
-    for (size_t i = 0; i < N; i++) {
-        res.push_back(static_cast<char>('0' + v[i]));
-    }
-    return res;
-}
-template <typename A>
-string to_string(A v) {
-    bool first = true;
-    string res = "{";
-    for (const auto &x : v) {
-        if (!first) {
-            res += ", ";
-        }
-        first = false;
-        res += to_string(x);
-    }
-    res += "}";
-    return res;
-}
-template <typename A, typename B>
-string to_string(pair<A, B> p) { return "(" + to_string(p.first) + ", " + to_string(p.second) + ")"; }
-template <typename A, typename B, typename C>
-string to_string(tuple<A, B, C> p) {
-    return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ")";
-}
-void debug_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void debug_out(Head H, Tail... T) {
-    cerr << " " << to_string(H);
-    debug_out(T...);
-}
-#ifndef LOCAL
-#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
-#else
-#define debug(...) 0
-#endif
- 
-// Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
- 
-const int mod = 1e9 + 7;
- 
-void solve(){
-    int n,a,b;
-    cin >> n >> a >> b;
-    map<int,int> fact;
-    for(int i=2;i*i<=n;i++){
-        while(n%i==0){
-            fact[i]++;
-            n/=i;
-        }
-    }
-    if(n!=1){
-        fact[n]++;
-    }
-    int ans = 0;
-    int eve = fact[2];
-    int odd = 0;
-    for(auto i:fact){
-        if(i.F!=2){
-            odd+=i.S;
-        }
-    }
-    // cout << eve << " " << odd << '\n';
-    if(a > 0){
-        ans += eve*a;
-        if(b<0 && eve) odd=0;
-    }
-    else {
-        if(eve){
-            ans+=a;
-            if(b<0){
-                odd = 0;
-            }
-        }
-    }
-    if(b > 0){
-        ans += odd*b;
-    }
-    else {
-        if(odd){
-            ans += b;
-        }
-    }
-    cout << ans << '\n';
-}
-signed main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+   #include<bits/stdc++.h>
+   using namespace std;
+      
+   #define ll long long int
+   #define fl float
+   #define dl double long
+   #define F first
+   #define S second
+   #define pb push_back
+   #define eb emplace_back
+   #define fo(x,start,end) for(int x=start;x<end;++x)
+   #define eif else if
+   #define all(v) v.begin(), v.end()
+   #define nline '\n'
+   #define Try ios_base::sync_with_stdio(0);
+   #define Until_You_Die cin.tie(0);
+   #define YES cout << "YES\n";
+   #define NO cout << "NO\n";
+   #define gl(s) getline(cin,s);
+   #define pf push_front
+   #define mp make_pair
+   #define vi vector<int>
+   #define tc ll t; cin >> t; while(t--)
+   const ll M = 1e9+7;
+
+   void primeFactors(ll n, vector<ll> &v){
+     for(ll i=2;i<=sqrt(n);i++) while(n%i==0){ v.eb(i); n/=i; } if(n>1) v.eb(n); 
+   }
     
-    cout << fixed << setprecision(10);
-    
-    int tt=1;
-    cin >> tt;
-    
-    while(tt--){
-        solve();
-    }
-}
+   void solution(){
+
+      tc{
+          ll n,a,b,sum=0,isOdd=0,isEven=0; cin >> n >> a >> b;
+          vector<ll> v;
+          primeFactors(n,v);
+
+          for(auto i:v){
+              if(i&1) isOdd++;
+              else isEven++;
+          }
+        
+        if(a>=0 && b>=0){
+            for(auto i:v){ if(i&1) sum+=b; else sum+=a; }
+            cout << sum << nline;
+        }
+        eif(a<0 && b<0){
+           if(n&1) cout << b << nline;
+           else cout << a << nline;
+        }
+        eif(a>=0 && b<0){
+           if(isOdd){if(!isEven) cout << isEven*a + b << nline; else cout << isEven*a << '\n';}
+           else cout << isEven*a << nline;
+        }
+        eif(a<0 && b>=0){
+            if(isEven){ cout << isOdd*b + a << nline; }
+            else cout << isOdd*b << nline;
+        }
+
+      }
+   }
+      
+   int main(){
+  
+     Try Until_You_Die
+     solution();   
+     return 0;
+     
+   }

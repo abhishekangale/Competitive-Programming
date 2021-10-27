@@ -94,13 +94,50 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    int n,k;
+    cin >> n >> k;
+    vi a(n+1,0);
+    vi pref(n+1,0);
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
+    }
+    for(int i=1;i<=n;i++){
+        pref[i]+=pref[i-1]+a[i];
+    }
+    map<int,set<pair<int,int>>> ss;
+    for(int i=1;i<=n;i++){
+        for(int j=i;j<=n;j++){
+            ss[pref[j]-pref[i-1]].insert(m_p(i,j));
+        }
+    }
+    
+    int ans = LLONG_MAX;
+    bool f=0;
+    for(int i=1;i<=n;i++){
+        for(int j=i;j<=n;j++){
+            int remain = k - (pref[j]-pref[i-1]);
+            if(remain<0)continue;
+            else if(remain==0){
+                ans=min(ans,j-i+1);
+            }
+            else {
+                if(ss.find(remain)!=ss.end()){
+                    for(auto x:ss[remain]){
+                        if((x.F<i && x.S<i) || (x.F>j && x.S>j)) {
+                            ans=min(ans,j-i+1+(x.S-x.F+1));
+                            f=1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    if(ans==LLONG_MAX){
+        cout << -1 << '\n';
+    }
+    else {
+        cout << ans << '\n';
     }
 }
 signed main(){
@@ -110,9 +147,9 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
-    
-    while(tt--){
+	cin >> tt;
+    for (auto case_num = 1; case_num <= tt; ++ case_num) {
+        cout << "Case #" << case_num << ": ";
         solve();
     }
 }

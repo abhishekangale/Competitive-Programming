@@ -96,12 +96,28 @@ const int mod = 1e9 + 7;
 void solve(){
     int n;
     cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    int res;
+    cin >> res;
+    vector<bool> vis(n+1,0);
+    for(int i=0; i<res; i++){
+        int a,b,c;
+        cin >> a >> b >> c;
+        vis[b]=1;
     }
+    int go=1;
+    for(int i=1;i<=n;i++){
+        if(!vis[i]){
+            go=i;
+            break;
+        }
+    }
+    for(int i=1; i<=n; i++){
+        if(i==go) continue;
+        cout << go << " " << i << '\n';
+    }
+    
+    
+    
 }
 signed main(){
     ios_base::sync_with_stdio(false);

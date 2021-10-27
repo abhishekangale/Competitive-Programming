@@ -91,17 +91,9 @@ void debug_out(Head H, Tail... T) {
  
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
-const int mod = 1e9 + 7;
- 
+const int mod = 1e18;
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
-    }
+    
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -110,7 +102,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

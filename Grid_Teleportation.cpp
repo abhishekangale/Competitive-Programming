@@ -94,14 +94,66 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    int n,m,c,k;
+    cin >> n >> m >> c >> k;
+    int a[n][m],b[n][m];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cin >> a[i][j];
+            b[i][j]=a[i][j];
+        }
     }
+    
+     
+    vpii spec(k);
+    for(auto &i:spec){
+        cin >> i.F >> i.S;
+    }
+    for (int i=1 ; i<n ; i++){
+        a[i][0] += a[i-1][0];
+    }
+    for (int j=1 ; j<m ; j++){
+        a[0][j] += a[0][j-1];
+    }
+    
+    for (int i=1 ; i<n; i++) {
+        for (int j=1 ; j<m ; j++) {
+            a[i][j] += min(a[i-1][j], a[i][j-1]);
+        }
+    }
+    
+    // for (int i=0 ; i<n; i++) {
+    //     for (int j=0 ; j<m ; j++) {
+    //          cout << a[i][j] << " ";
+    //     }
+    //     cout << '\n';
+    // }
+    sort(all(spec));
+    int distprev = LLONG_MAX;
+    for(int i=0;i<k;i++){
+        distprev = min(distprev, a[spec[i].F][spec[i].S]);
+    }
+
+    for(int i=0;i<k;i++){
+        int req = distprev + c + b[spec[i].F][spec[i].S];
+        if(spec[i].F!=0 && spec[i].S!=0)a[spec[i].F][spec[i].S]=min(a[spec[i].F][spec[i].S],req);
+    }
+
+    for (int i=1 ; i<n; i++) {
+        for (int j=1 ; j<m ; j++) {
+            a[i][j] = min({a[i-1][j]+b[i][j], a[i][j-1]+b[i][j],a[i][j]});
+        }
+    }
+
+    // for (int i=0 ; i<n; i++) {
+    //     for (int j=0 ; j<m ; j++) {
+    //          cout << a[i][j] << " ";
+    //     }
+    //     cout << '\n';
+    // }
+    // cout << distprev << '\n';
+    
+    cout << a[n-1][m-1] << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);

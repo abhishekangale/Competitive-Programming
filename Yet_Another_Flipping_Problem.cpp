@@ -92,15 +92,28 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
+
+bool check(int n)
+{
+   if(n==0)
+   return false;
  
+   return (ceil(log2(n)) == floor(log2(n)));
+}
+
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    int n,k;
+    cin >> n >> k;
+    if(!check(k+1)){
+        cout << "NO\n";
+    }
+    else {
+        cout << "YES\n";
+        int x = (int)log2(k+1);
+        cout << x << '\n';
+        for(int i=0; i<x; i++){
+            cout << (1<<i) << '\n';
+        }
     }
 }
 signed main(){

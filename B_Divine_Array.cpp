@@ -96,11 +96,40 @@ const int mod = 1e9 + 7;
 void solve(){
     int n;
     cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
+    vector<int> a(n);
+    for(int i=0; i<n; i++){
+        cin >> a[i];
+    }
+    vector<vector<int>> b;
+    b.push_back(a);
+    int cnt=0;
+    int q;
+    cin >> q;
     while(1){
-        
+        vector<int> nex = b[cnt];
+        map<int,int> fre;
+        for(auto i:nex){
+            fre[i]++;
+        }
+        vi ex(n);
+        for(int i=0; i<n; i++){
+            ex[i]=fre[nex[i]];
+        }
+        if(ex == nex) break;
+        else {
+            b.pb(ex);
+            cnt++;
+        }
+    }
+    // cout << b.size() << '\n';
+    
+    while(q--){
+        int x,k;
+        cin >> x >> k;
+        if(k > cnt){
+            k=cnt;
+        }
+        cout << b[k][x-1] << '\n';
     }
 }
 signed main(){

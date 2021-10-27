@@ -92,16 +92,30 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+#define ll long long
+bool isprime(ll n){
+    if(n<=1){return false;}
+    if(n<=3){return true;}
+    if(n%2==0||n%3==0){return false;}
+    for(ll i=5;i*i<=n;i+=6){ if(n%i==0||n%(i+2)==0){return false;} }
+    return true;
+}
 void solve(){
     int n;
     cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    if(n%2){
+        cout << "YES\n";
     }
+    else {
+        if(isprime(n+1)){
+            cout << "NO\n";
+        }
+        else {
+            cout << "YES\n";
+        }
+    }
+
+    // (n/2) * (n+1) -> 1 2 3 4 -> factors < sqrt(n+1)
 }
 signed main(){
     ios_base::sync_with_stdio(false);

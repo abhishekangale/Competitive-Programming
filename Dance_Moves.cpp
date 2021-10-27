@@ -94,13 +94,18 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    int x,y;
+    cin >> x >> y;
+    if(y<x){
+        cout << abs(y-x) << '\n';
+    }
+    else {
+        if((y-x)%2==0){
+            cout << abs(y-x)/2 << '\n';
+        }
+        else {
+            cout << abs((y+1)-x)/2 + 1 << '\n';
+        }
     }
 }
 signed main(){

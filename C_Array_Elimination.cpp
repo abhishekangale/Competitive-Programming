@@ -96,11 +96,37 @@ const int mod = 1e9 + 7;
 void solve(){
     int n;
     cin >> n;
-    int d;
-    cin >> d;
-    int i=0;
-    while(1){
-        
+    vi a(n);
+    for(auto &i:a)cin>>i;
+    vi bit(33,0);
+    for(int i=0; i<n; i++){
+        int x = a[i];
+        for(int j=0;j<33;j++){
+            bit[j]+=(x%2);
+            x/=2;
+        }
+    }
+    // debug(bit);
+    int gc=0;
+    for(int i=0;i<33;i++){
+        gc=__gcd(gc,bit[i]);
+    }
+    if(gc==0){
+        for(int i=1;i<=n;i++)cout<<i<<" ";
+        cout << '\n';
+    }
+    else {
+        set<int> fact;
+        fact.insert(1);
+        fact.insert(gc);
+        for(int i=2;i*i<=gc;i++){
+            if(gc%i==0){fact.insert(i);fact.insert(n/i);}
+        }
+        for(auto i:fact){
+            cout << i << " ";
+        }
+        cout << '\n';
+
     }
 }
 signed main(){
