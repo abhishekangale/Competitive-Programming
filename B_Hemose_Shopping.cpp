@@ -1,130 +1,171 @@
-#include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
+ #pragma GCC optimize("Ofast")
+// #include<bits/stdc++.h>
+// using namespace std;
+// using ll=long long int;using fl=float;using dl=double long;
+// #define F first
+// #define S second
+// #define pb push_back
+// #define eb emplace_back
+// #define fo(x,start,end) for(ll x=start;x<end;++x)
+// #define rfo(x,start,end) for(ll x=start;x>=end;x--)
+// #define eif else if
+// #define all(v) v.begin(), v.end()
+// #define nl '\n'
+// #define Try ios_base::sync_with_stdio(0);
+// #define Until_You_Die cin.tie(0); cout.tie(0);
+// #define YES cout << "YES\n";
+// #define NO cout << "NO\n";
+// #define gl(s) getline(cin,s);
+// #define pf push_front
+// #define mp make_pair
+// #define ins insert
+// #define tc ll t; cin >> t; while(t--)
+// const ll M = 1e9+7;
+
+// void solution(){
+//   tc{
+ 
+//       ll n,k,N,,countkabeta=0; cin >> n >> k; N=n; vector<ll> v(n); fo(i,0,n) cin >> v[i]; 
+//       if(n==1){ YES continue; }
+//     if(k>=n){ NO continue; }
+
+ 
+//     ll foo=n-k;
+//     if(k<=n/2){ YES continue; }
+ 
+//     if(is_sorted(all(v))){ YES continue; }
+ 
+//     vector<ll> temp;
+
+ 
+//     fo(i,0,foo) temp.pb(v[i]);
+
+//     // for(auto i: temp) cout << i << ' ';
+//      // cout << nl;
+ 
+//     rfo(i,n-1,k) temp.pb(v[i]);
+ 
+//      // for(auto i: temp) cout << i << ' ';
+//      // cout << nl;
+
+//     // n--;
+//     // while(1){
+//     //     temp.pb(v[n]);
+//     //     count++; n--;
+//     //     if(count==foo) break;
+//     // }
+
+//     // n=N;
+//     // n--;
+ 
+//     sort(all(temp));
+
+ 
+//       // for(auto i: temp) cout << i << ' ';
+//      // cout << nl;
+
+
+//     fo(i,0,foo) v[i]=temp[i];
+ 
+ 
+//      // for(auto i: v) cout << i << ' ';
+//      // cout << nl;
+ 
+//   int kk=0;
+//    for(ll i=n-k;i<n;i++){
+//     v[i]=temp[k+kk++];
+//   }
+ 
+//      // for(auto i: v) cout << i << ' ';
+//      // cout << nl;
+
+//     fo(i,0,v.size()-1) if(v[i]<=v[i+1]) countkabeta++;
+ 
+//     //cout << countkabeta << nl;
+
+//     if(countkabeta==N-1) YES
+//     else NO
+ 
+//   }
+// }
+   
+// int main(){
+//  Try Until_You_Die
+//  solution();   
+//  return 0;
+// }
+
+
+
+
+
+
+ #pragma GCC optimize("Ofast")
+#include<bits/stdc++.h>
 using namespace std;
- 
-template <typename T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-// oset Operations: order_of_key(k) -> Number of elements strictly smaller than k, find_by_order(k) -> kth element in the set
- 
-#define ull unsigned long long int
-#define int long long int
-#define pb push_back
-#define eb emplace_back
-#define all(x) x.begin(),x.end()
-#define pii pair<int, int>
-#define pll pair<ll, ll>
-#define vi vector<int>
-#define vb vector<bool>
-#define vd vector<double>
-#define vll vector<ll>
-#define vpii vector<pii>
-#define vpll vector<pll>
-#define vvi vector<vi>
-#define vvll vector<vll>
-#define vvb vector<vb>
-#define vs vector<string>
-#define pull pair<ull, ull>
+using ll=long long int;using fl=float;using dl=double long;
 #define F first
 #define S second
-#define m_p make_pair
+#define pb push_back
+#define eb emplace_back
+#define fo(x,start,end) for(ll x=start;x<end;++x)
+#define rfo(x,start,end) for(ll x=start;x>=end;x--)
+#define eif else if
+#define all(v) v.begin(), v.end()
+#define nl '\n'
+#define Try ios_base::sync_with_stdio(0);
+#define Until_You_Die cin.tie(0); cout.tie(0);
+#define YES cout << "YES\n";
+#define NO cout << "NO\n";
+#define gl(s) getline(cin,s);
+#define pf push_front
+#define mp make_pair
+#define ins insert
+#define tc ll t; cin >> t; while(t--)
+const ll M = 1e9+7;
  
-const long double PI = 3.141592653589793238462643383279502884197169399;
+void solution(){
+  tc{
  
-template <typename A, typename B> string to_string(pair<A, B> p);
-template <typename A, typename B, typename C> string to_string(tuple<A, B, C> p);
-string to_string(const string& s) { return '"' + s + '"'; }
-string to_string(const char* s) { return to_string((string) s); }
-string to_string(bool b) { return (b ? "true" : "false"); }
-string to_string(vector<bool> v) {
-    bool first = true;
-    string res = "{";
-    for (int i = 0; i < static_cast<int>(v.size()); i++) {
-        if (!first) {
-            res += ", ";
-        }
-        first = false;
-        res += to_string(v[i]);
-    }
-    res += "}";
-    return res;
-}
-template <size_t N>
-string to_string(bitset<N> v) {
-    string res = "";
-    for (size_t i = 0; i < N; i++) {
-        res.push_back(static_cast<char>('0' + v[i]));
-    }
-    return res;
-}
-template <typename A>
-string to_string(A v) {
-    bool first = true;
-    string res = "{";
-    for (const auto &x : v) {
-        if (!first) {
-            res += ", ";
-        }
-        first = false;
-        res += to_string(x);
-    }
-    res += "}";
-    return res;
-}
-template <typename A, typename B>
-string to_string(pair<A, B> p) { return "(" + to_string(p.first) + ", " + to_string(p.second) + ")"; }
-template <typename A, typename B, typename C>
-string to_string(tuple<A, B, C> p) {
-    return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ")";
-}
-void debug_out() { cerr << endl; }
-template <typename Head, typename... Tail>
-void debug_out(Head H, Tail... T) {
-    cerr << " " << to_string(H);
-    debug_out(T...);
-}
-#ifndef LOCAL
-#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
-#else
-#define debug(...) 0
-#endif
+    ll n,k,N; cin >> n >> k; N=n; vector<ll> v(n); fo(i,0,n) cin >> v[i]; 
+    if(n==1){ YES continue; }
+    if(k>=n){ NO continue; }
  
-// Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
-const int mod = 1e9 + 7;
+    //ll foo=n-k;
+    if(k<n/2){ YES continue; }
  
-void solve(){
-    int n, x;
-    cin >> n >> x;
-    vi a(n);
-    for(auto &i:a)cin>>i;
-    if(n/2>x){
-        cout << "YES\n";
+    if(is_sorted(all(v))){ YES continue; }
+ 
+    vector<ll> temp;
+
+    k=n-k;
+ 
+    for(ll i=0;i<k;i++) temp.pb(v[i]);
+ 
+    for(ll i=n-1;i>n-k-1;i--) temp.pb(v[i]);
+ 
+    sort(all(temp));
+ 
+    fo(i,0,k) v[i]=temp[i];
+ 
+    int kk=0;
+     for(ll i=n-k;i<n;i++){
+     v[i]=temp[k+kk];
+     kk++;
     }
-    else{
-        vi b;
-        for(int i=x;i<n;i++)b.pb(a[i]),a[i]=-1;
-        for(int i=n-1-x;i>=0;i--)b.pb(a[i]),a[i]=-1;
-        sort(all(b));
-        int j=0;
-        for(int i=0;i<n;i++){
-            if(a[i]==-1)a[i]=b[j],j++;
-        }
-        debug(a);
-        if(is_sorted(all(a)))cout<<"YES\n";
-        else cout << "NO\n";
-    }
+
+    for(auto i:v) cout << i << ' ';
+    cout << nl;
+ 
+    if(is_sorted(all(v))) YES
+    else NO
+ 
+  }
 }
-signed main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    
-    cout << fixed << setprecision(10);
-    
-    int tt=1;
-    cin >> tt;
-    
-    while(tt--){
-        solve();
-    }
+   
+int main(){
+ Try Until_You_Die
+ solution();   
+ return 0;
 }
