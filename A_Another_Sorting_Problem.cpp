@@ -92,33 +92,48 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
-void solve(){
-    int n,k,m;
-    cin>>n>>k>>m;
-    
-    vector<int> v(n);
-    for(int i = 0;i < n;i++) cin>>v[i];
-    sort(all(v));
-    
-    if(m >= v.size())
-    {
-        m -= v.size() - 1;
-        double res = min(m,k) + v[n-1];
-        cout<<fixed<<setprecision(12)<<res;  
+
+bool cmp(pair<string,int> x, pair<string,int> y){
+    string a = x.F,b=y.F;
+    int sz = (int)a.size();
+    for(int i=0; i<sz; i++){
+        if(a[i] != b[i]){
+            if(i%2==0){
+                if(a[i] > b[i]) return 0;
+                else return 1;
+            }
+            else {
+                if(a[i] > b[i]) return 1;
+                else return 0;
+            }
+        }
     }
- 
-    else if(m < v.size())
-    {
-        sort(all(v),greater<int>());
-        double res = 0;
-        for (int i = 0; i < v.size() - m; i++)
-            res += v[i];
-        
-        m -= v.size();
-        m = abs(m);
-        res = res/m;
-        cout<<fixed<<setprecision(6)<<res;  
+    return 1;
+}
+
+/*
+
+    greater<int> -> bool (int a,int b){
+        a > b return 1;
+        else return 0;
+    }
+*/
+
+/*
+    cmp -> 0 -> b < a
+           1 -> a < b
+*/
+void solve(){
+    int n,m;
+    cin >> n >> m;
+    vector<pair<string,int>> a(n);
+    for(int i=0; i<n; i++){
+        cin >> a[i].F;
+        a[i].S=i;
+    }
+    sort(a.begin(),a.end(),cmp);
+    for(int i=0; i<n; i++){
+        cout << a[i].S+1 << ' ';
     }
 }
 signed main(){

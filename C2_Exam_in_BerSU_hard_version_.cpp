@@ -94,31 +94,42 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,k,m;
-    cin>>n>>k>>m;
-    
-    vector<int> v(n);
-    for(int i = 0;i < n;i++) cin>>v[i];
-    sort(all(v));
-    
-    if(m >= v.size())
-    {
-        m -= v.size() - 1;
-        double res = min(m,k) + v[n-1];
-        cout<<fixed<<setprecision(12)<<res;  
-    }
- 
-    else if(m < v.size())
-    {
-        sort(all(v),greater<int>());
-        double res = 0;
-        for (int i = 0; i < v.size() - m; i++)
-            res += v[i];
-        
-        m -= v.size();
-        m = abs(m);
-        res = res/m;
-        cout<<fixed<<setprecision(6)<<res;  
+    int n,m;
+    cin >> n >> m;
+    vi a(n);
+    for(auto &i:a)cin >> i;
+    multiset<int, greater<int>> xd;
+    int sum = 0;
+    int ans = 0;
+    for(int i=0; i<n; i++){
+        if(sum+a[i] <= m){
+            cout << ans << ' ';
+            xd.insert(a[i]);
+            sum+=a[i];
+        }
+        else {
+            if(*xd.begin() >= a[i]){
+                sum -= *xd.begin();
+                xd.erase(xd.begin());
+                xd.insert(a[i]);
+                sum+=a[i];
+                ans++;
+                cout << ans << ' ';
+            }
+            else {
+                int nts = sum, oper = 0;
+                multiset<int> lmao;
+                while(nts+a[i] > m){
+                    nts -= *xd.begin();
+                    lmao.insert(*xd.begin());
+                    xd.erase(xd.begin());
+                    oper++;
+                }
+                cout << ans + oper << ' ';
+                for(auto i : lmao) xd.insert(i);
+                ans++;
+            }
+        }
     }
 }
 signed main(){

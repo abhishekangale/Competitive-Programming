@@ -99,8 +99,12 @@ void solve(){
     vi a(n);
     for(auto &i:a)cin >> i;
     sort(all(a));
+    int x = 0;
     for(int i=n-1; i>=(n+1)/2; i--){
         cout << a[i] << " " << a[0] << '\n';
+        for(int j=0; j*j<=sqrt(n); j++){
+
+        }
     }
 }
 signed main(){

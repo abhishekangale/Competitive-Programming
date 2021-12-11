@@ -94,32 +94,16 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,k,m;
-    cin>>n>>k>>m;
-    
-    vector<int> v(n);
-    for(int i = 0;i < n;i++) cin>>v[i];
-    sort(all(v));
-    
-    if(m >= v.size())
-    {
-        m -= v.size() - 1;
-        double res = min(m,k) + v[n-1];
-        cout<<fixed<<setprecision(12)<<res;  
+    int n,k;
+    cin >> n >> k;
+    vi a(n);
+    for(auto &i : a) cin >> i;
+    int ans = 0;
+    if(is_sorted(all(a))){
+        cout << 0 << '\n';
+        return;
     }
- 
-    else if(m < v.size())
-    {
-        sort(all(v),greater<int>());
-        double res = 0;
-        for (int i = 0; i < v.size() - m; i++)
-            res += v[i];
-        
-        m -= v.size();
-        m = abs(m);
-        res = res/m;
-        cout<<fixed<<setprecision(6)<<res;  
-    }
+    
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -128,7 +112,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();
