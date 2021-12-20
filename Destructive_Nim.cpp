@@ -92,27 +92,35 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
+void findw(vi a, int n){
+    int win = 0;
+    if (n % 2 == 0)
+        win = 1;
+    else
+        win = 0;
  
-void solve(){
-    int n,c;
-    cin >> n >> c;
-    vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
-    }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
+    for (int i = n - 2; i >= 0; i--) {
+        if (i % 2 == 1) {
+            if (win == 0 && a[i] > 1)
+                win = 1;
+        }
+        else {
+            if (win == 1 && a[i] > 1)
+                win = 0;
         }
     }
-    cout << mx[c];
-    
+    if (win == 0)
+        cout << "A\n";
+    else
+        cout << "B\n";
+} 
+
+void solve(){
+    int n;
+    cin >> n;
+    vi a(n);
+    for(auto &i:a)cin >> i;
+    findw(a,n);
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -121,7 +129,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

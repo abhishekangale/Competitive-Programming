@@ -94,26 +94,36 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,c;
-    cin >> n >> c;
+    int n, ans=0;
+    cin >> n;
     vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
-    }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
+    for(auto &i:a)cin >> i;
+    sort(all(a));
+    vector<bool> vis(n+1,0);
+    vi buffer, make;
+    for(int i=0; i<n; i++){
+        if(a[i] <= n && !vis[a[i]]){
+            vis[a[i]] = 1;
+        }
+        else {
+            buffer.pb(a[i]);
         }
     }
-    cout << mx[c];
-    
+    for(int i=1; i<=n; i++){
+        if(!vis[i]){
+            make.pb(i);
+        }
+    }
+    for(int i=0; i<(int)make.size(); i++){
+        if(make[i]*2 + 1 > buffer[i]){
+            cout << -1 << '\n';
+            return;
+        }
+        else ans++;
+    }
+    cout << ans << '\n';
 }
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -121,7 +131,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

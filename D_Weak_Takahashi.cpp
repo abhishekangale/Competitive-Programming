@@ -94,25 +94,43 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,c;
-    cin >> n >> c;
-    vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
-    }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
+    int n,m;
+    cin >> n >> m;
+    char grid[n][m];
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m ;j++){
+            cin >> grid[i][j];
         }
     }
-    cout << mx[c];
-    
+    int dp[n][m];
+    memset(dp,INT_MIN,sizeof(dp));
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            dp[i][j] = LLONG_MIN;
+        }
+    }
+    dp[0][0] = 1;
+    int mx = 1;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            if(i==0 && j==0) continue;
+            if(grid[i][j]=='#')continue;
+            if(i > 0){
+                dp[i][j] = max(dp[i][j] , dp[i-1][j] + 1);
+            }
+            if(j > 0){
+                dp[i][j] = max(dp[i][j] , dp[i][j-1] + 1);
+            }
+        }
+    }
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            // cout << dp[i][j] <<  ' ';
+            mx = max(mx, dp[i][j]);
+        }
+        // cout << '\n';
+    }
+    cout << mx;
 }
 signed main(){
     ios_base::sync_with_stdio(false);

@@ -94,25 +94,20 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,c;
-    cin >> n >> c;
-    vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
-    }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
+    int n;
+    cin >> n;
+    int ans = 0;
+    int xd = 3040;
+    while(n%xd == 0 && n > 0){
+        int xdd = 3040;
+        while(xdd*10 <= n){
+            xdd*=10;
         }
+        ans+=(n/xdd);
+        n-=(n/xdd)*xdd;
     }
-    cout << mx[c];
-    
+    if(n) cout << -1 << '\n';
+    else cout << ans << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -121,7 +116,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

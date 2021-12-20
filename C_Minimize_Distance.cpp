@@ -94,25 +94,31 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,c;
-    cin >> n >> c;
+    int n,k;
+    cin >> n >> k;
     vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
+    for(auto &i:a)cin >> i;
+    vi pos,neg;
+    for(auto i : a){
+        if(i > 0) pos.pb(i);
+        else neg.pb(i);
     }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
-        }
+    sort(all(pos));
+    sort(all(neg));
+    int ans = 0;
+    for(int i = (int)pos.size()-1; i>=0; i-=min(k,(int)pos.size())){
+        ans += 2*pos[i];
     }
-    cout << mx[c];
-    
+    for(int i = 0; i<(int)neg.size(); i+=min(k,(int)neg.size())){
+        ans += abs(2*neg[i]);
+    }
+    int x, y;
+    if(pos.empty()) x = 0;
+    else x = pos.back();
+    if(neg.empty()) y = 0;
+    else y = abs(neg[0]);
+    ans -= max(x,y);
+    cout << ans << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -121,7 +127,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

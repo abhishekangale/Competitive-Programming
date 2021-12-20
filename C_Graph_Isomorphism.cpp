@@ -94,25 +94,58 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,c;
-    cin >> n >> c;
-    vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
+    int n,m;
+    cin >> n >> m;
+    if(m==0){
+        cout << "Yes";
+        return;
     }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
+    set<int> a[n];
+    for(int i=0; i<m; i++){
+        int x,y;
+        cin >> x >> y;
+        x--,y--;
+        a[x].insert(y);
+        a[y].insert(x);
+    }
+    vpii edge;
+    for(int i=0; i<m; i++){
+        int x,y;
+        cin >> x >> y;
+        x--,y--;
+        edge.pb({x,y});
+    }
+    vi all;
+    for(int i=0; i<n; i++)all.pb(i);
+    do{
+        vpii tmp = edge;
+        set<int> b[n];
+        for(auto &i : tmp){
+            i.F = all[i.F];
+            i.S = all[i.S];
+            b[i.F].insert(i.S);
+            b[i.S].insert(i.F);
+        }
+        
+        bool f = 1;
+        for(int i=0; i<n; i++){
+            if(a[i].size()!=b[i].size()){
+                f=0;
+                break;
+            }
+            if(a[i]!=b[i]){
+                f=0;
+                break;
+            }
+        }
+
+        if(f){
+            cout << "Yes";
+            return;
         }
     }
-    cout << mx[c];
-    
+    while(next_permutation(all(all)));
+    cout << "No";
 }
 signed main(){
     ios_base::sync_with_stdio(false);

@@ -94,25 +94,33 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,c;
-    cin >> n >> c;
+    int n;
+    cin >> n;
     vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
+    int sum = 0;
+    for(auto &i:a)cin >> i, sum+=i;
+    // debug(sum);
+    int all = (n*(n+1))/2;
+    int inx = sum/all;
+    vi ans;
+    if( (inx-a[0]+a[n-1]<=0) || (inx-a[0]+a[n-1])%n!=0){
+        cout << "NO\n";
+        return;
     }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
+    ans.pb((inx-a[0]+a[n-1])/n);
+    for(int i=1; i<n; i++){
+        int diff = a[i] - a[i-1];
+        if( (inx-diff <= 0) || (inx-diff)%n!=0) {
+            cout << "NO\n";
+            return;
         }
+        ans.pb(((inx - diff)/n));
     }
-    cout << mx[c];
-    
+    cout << "YES\n";
+    for(auto i: ans){
+        cout << i << " ";
+    }
+    cout << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -121,7 +129,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

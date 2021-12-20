@@ -94,25 +94,22 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,c;
-    cin >> n >> c;
+    int n;
+    cin >> n;
     vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
+    for(auto &i:a)cin >> i;
+    int one=0, two=0, three=0;
+    for(int i=0; i<n; i++){
+        int o,t,th;
+        th=a[i]/3;
+        a[i]%=3;
+        if(a[i]==2) t=1;
+        else if(a[i]==1) o=1;
+        one = max(one,o);
+        two = max(two,t);
+        three=max(three,th);
     }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
-        }
-    }
-    cout << mx[c];
-    
+    cout << one+two+three << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -121,7 +118,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

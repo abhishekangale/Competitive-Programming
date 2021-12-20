@@ -92,26 +92,54 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+
 void solve(){
-    int n,c;
-    cin >> n >> c;
-    vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
-    }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
+    int q;
+    cin >> q;
+    vpii rep;
+    int st = 0;
+    bool f = 0;
+    map<int,vi> ans;
+    while(q--){
+        int x;
+        cin >> x;
+        if(x==1){
+            int y;
+            cin >> y;
+            ans[y].pb(st);
+            st++;
+            f=1;
+        }
+        else {
+            int a,b;
+            cin >> a >> b;
+            if(!f) continue;
+            rep.pb({a,b});
         }
     }
-    cout << mx[c];
+    map<int,int> ver,rev;
+    for(int i=0; i<rep.size(); i++){
+        if(rep[i].F == rep[i].S) continue;
+        if(rev.find(rep[i].F)==rev.end()){
+            ver[rep[i].F] = rep[i].S;
+            rev[rep[i].S] = rep[i].F;
+        }
+        else {
+            ver[rev[rep[i].F]] = rep[i].S;
+            rev[rep[i].S] = rev[rep[i].F];
+            rev.erase(rep[i].F);
+            
+        }
+        
+    }
+    for(auto i : ver){
+        auto &fin = mp.find(i.F);
+        fin.F = i.S;
+    }
+    vi ans(st+1);
+    for(auto i : mp){
+        an
+    }
     
 }
 signed main(){

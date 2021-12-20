@@ -94,24 +94,18 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,c;
-    cin >> n >> c;
-    vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
-    }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
+    int a[7];
+    for(int i=0; i<7; i++)cin >> a[i];
+    for(int i=0; i<6; i++){
+        for(int j=i+1; j<6; j++){
+            for(int k=j+1; k<6; k++){
+                if(a[i]+a[j]+a[k] == a[6]){
+                    cout << a[i] << " " << a[j] << " " << a[k] << '\n';
+                    return;
+                }
+            }
         }
     }
-    cout << mx[c];
     
 }
 signed main(){
@@ -121,7 +115,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

@@ -94,25 +94,72 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,c;
-    cin >> n >> c;
-    vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
-    }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
+    int n;
+    cin >> n;
+    int ans = 0;
+    int found = 0;
+    vi a(n,-1);
+    // imp = 0 , crew = 1
+    int prev;
+    cout << "? " << 1 << " " << 2 << " " << 3 << endl;
+    cin >> prev;
+     int fi , sd;
+    for(int i=1; i<n; i++){
+        int x = i, y = i+1, z = i+2;
+        x%=n, y%=n, z%=n;
+        int nx;
+        cout << "? " << x+1 << " " << y+1 << " " << z+1 << endl;
+        cin >> nx;
+        if(prev == nx){
+            continue;
+        }
+        else {
+            found = z;
+            int p = (i-1+n)%n , q = x , r = y , s = z;
+            a[p] = prev;
+            a[s] = nx;
+            int ss;
+            cout << "? " << p+1 << " " << q+1 << " " << s+1 << endl;
+            cin >> ss;
+            a[q] = ss;
+            cout << "? " << p+1 << " " << r+1 << " " << s+1 << endl;
+            cin >> ss;
+            a[r] = ss;
+            if(a[p]!=a[q]){
+                fi=p;sd=q;
+            }
+            else if(a[p]!=a[r]){
+                fi=p;sd=r;
+            }
+            else if(a[p]!=a[s]){
+                fi=p;sd=s;
+            }
+            break;
         }
     }
-    cout << mx[c];
     
+    for(int i=found+1; i<found+1+n; i++){
+        int j = (i%n);
+        if(a[j]!=-1) break;
+        cout << "? " << fi+1 << " " << sd+1 << " " << j+1 << endl;
+        int res;
+        cin >> res;
+        a[j] = res;
+    }
+    int sum = 0;
+    for(auto i : a){
+        sum+=(i==0);
+    }
+    cout << "! " << sum << " ";
+    vi b;
+    for(int i=0; i<n; i++){
+        if(a[i] == 0) b.pb(i+1);
+    }
+    for(auto i : b){
+        cout << i << " ";
+    }
+    cout << endl;
+
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -121,7 +168,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

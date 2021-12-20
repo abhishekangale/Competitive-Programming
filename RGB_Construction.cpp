@@ -94,25 +94,40 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,c;
-    cin >> n >> c;
-    vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
+    int r,g,b;
+    cin >> r >> g >> b;
+    if(b > r+g){
+        cout << -1 << '\n';
+        return;
     }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
-        }
+    string ans;
+    ans+='R';
+    r--;
+    vpii a;
+    int cur = 2;
+    while(g--){
+        ans+='G';
+        a.pb({1,cur});
+        cur++;
     }
-    cout << mx[c];
-    
+    int lol = cur;
+    cur--;
+    while(r--){
+        ans+='R';
+        a.pb({cur,lol});
+        lol++;
+    }
+    int start = 1;
+    while(b--){
+        ans+='B';
+        a.pb({start,lol});
+        start++;
+        lol++;
+    }
+    cout << ans << '\n';
+    for(auto i : a){
+        cout << i.F << " " << i.S << '\n';
+    }
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -121,7 +136,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

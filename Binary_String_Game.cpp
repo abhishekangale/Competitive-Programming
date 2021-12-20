@@ -92,27 +92,74 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+
+string findWinner(vi A, int n)
+{
+    int res = 0;
+    for (int i = 0; i < n; i++)
+        res ^= A[i];
+    if (res == 0 || n % 2 == 0)
+        return "Uttu";
+    else
+        return "JJ";
+}
+
 void solve(){
-    int n,c;
-    cin >> n >> c;
-    vi a(n);
-    for(auto &i : a)cin >> i;
-    vi mx(c+1, LLONG_MAX);
-    mx[0] = 0;
-    for(int i=1; i<=c; i++){
-        mx[i] = -1;
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    if(n%2){
+        int cnt = 0;
+        vi idx;
+        for(int i=0; i<n; i++){
+            if(i%2 && s[i]!='0')idx.pb(i);
+            else if(i%2==0 && s[i]!='1')idx.pb(i);
+        }
+        int m = (int)idx.size();
+        for(int i=0; i<m; i++){
+            idx[i]-=i;
+        }
+        map<int,int> a;
+        for(auto i :idx){
+            a[i]++;
+        }
+        vi nim;
+        for(auto i: a){
+            nim.pb(i.S);
+        }
+    
+        string ans = findWinner(nim,nim.size());
+        cout << ans << '\n';
     }
-    for(int i=0; i<=c; i++){
-        for(int j=0; j<n; j++){
-            if(i-a[j] >= 0){
-                if(mx[i] == -1) mx[i] = mx[i-a[j]]+1;
-                else mx[i] = min(mx[i], mx[i-a[j]]+1);
-            } 
+    else {
+        int cnt = 0;
+        vi idx,udx;
+        for(int i=0; i<n; i++){
+            if(i%2 && s[i]!='0')idx.pb(i);
+            else if(i%2==0 && s[i]!='1')idx.pb(i);
+        }
+        for(int i=0; i<n; i++){
+            if(i%2 && s[i]!='1')udx.pb(i);
+            else if(i%2==0 && s[i]!='0')udx.pb(i);
+        }
+        int m = (int)idx.size();
+        for(int i=0; i<m; i++){
+            idx[i]-=i;
+        }
+
+        int m1 = (int)udx.size();
+        for(int i=0; i<m1; i++){
+            udx[i]-=i;
+        }
+        string ff = findWinner(idx,m),ss = findWinner(udx,m1);
+        if(ff=="JJ" || ss == "JJ"){
+            cout << "JJ\n";
+        }
+        else {
+            cout << "Uttu\n";
         }
     }
-    cout << mx[c];
-    
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -121,7 +168,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    //cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();
