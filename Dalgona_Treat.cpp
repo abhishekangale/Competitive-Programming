@@ -92,31 +92,50 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
-
-int lcm(int a,int b){
-    int gc = __gcd(a,b);
-    return (a*b)/gc;
-}
-
+ 
 void solve(){
     int n;
-    cin>>n;
-    int ans = n%mod;
-    int start = 1;
-    for(int i=1; start <= n; i++){
-        start = lcm(start,i);
-        ans+=(n/start);
-        int val = start;
-        // debug(i,val);
-        ans%=mod;
+    cin >> n;
+    if(n==1){
+        cout << 1 << '\n';
+        cout << 1 << " " << 1 << '\n';
     }
-    cout << ans << '\n';
-}
+    else if (n==2){
+        cout << 2 << '\n';
+        cout << 3 << " " << 1 << '\n';
+        cout << 4 << " " << 1 << '\n';
+    }
+    else {
+        if(n%2==0){
+            map<int,int> a;
+            a[1] = n-1;
 
+            int nth = (n-1)/2;
+            a[nth]++;
+            cout << (int)a.size() << '\n';
+            for(auto i :a){
+                cout << i.F << " " << i.S << '\n';
+            }
+        }
+        else {
+            map<int,int> a;
+            a[1] = n-2;
+            a[2] = 1;
+            int nth = (n+1)/2;
+            a[nth]++;
+            cout << (int)a.size() << '\n';
+            for(auto i :a){
+                cout << i.F << " " << i.S << '\n';
+            }
+        }
+    }
+}
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    
     cout << fixed << setprecision(10);
+    
     int tt=1;
     cin >> tt;
     

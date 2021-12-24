@@ -93,32 +93,44 @@ void debug_out(Head H, Tail... T) {
  
 const int mod = 1e9 + 7;
 
-int lcm(int a,int b){
-    int gc = __gcd(a,b);
-    return (a*b)/gc;
-}
-
 void solve(){
-    int n;
-    cin>>n;
-    int ans = n%mod;
-    int start = 1;
-    for(int i=1; start <= n; i++){
-        start = lcm(start,i);
-        ans+=(n/start);
-        int val = start;
-        // debug(i,val);
-        ans%=mod;
+    int p,q,n;
+    cin >> p >> q >> n;
+    vvi a(n,vi(3));
+    vvi ans(11, vi (11,mod));
+    for(auto &i:a){
+        for(auto &j:i){
+            cin >> j;
+        }
+        ans[i[0]][i[1]] = i[2];
     }
-    cout << ans << '\n';
-}
+    for(int k=0; k<n; k++){
+        for(int i=1; i<=10; i++){
+            for(int j=1; j<=10; j++){
+                {
+                    if((i - a[k][0] >= 1) && (j - a[k][1] >= 1)){
+                        ans[i][j] = min(ans[i][j], ans[i - a[k][0]][j - a[k][1]] + a[k][2]);
+                    }
+                }
+            }
+        }
+    }
+    if(ans[p][q]==mod){
+        cout << -1;
+    }
+    else cout << ans[p][q];
 
+    
+    
+}
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    
     cout << fixed << setprecision(10);
+    
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

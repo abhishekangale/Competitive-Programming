@@ -92,31 +92,45 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
-
-int lcm(int a,int b){
-    int gc = __gcd(a,b);
-    return (a*b)/gc;
-}
-
+ 
+ vector<char> vowel = {'a','e','i','o','u'};
 void solve(){
     int n;
-    cin>>n;
-    int ans = n%mod;
-    int start = 1;
-    for(int i=1; start <= n; i++){
-        start = lcm(start,i);
-        ans+=(n/start);
-        int val = start;
-        // debug(i,val);
-        ans%=mod;
+    cin >> n;
+    string a,b;
+    cin >> a >> b;
+    int ans = LLONG_MAX;
+    for(int i=0; i<26; i++){
+        string aa = a;
+        string bb = b;
+        char ques = 'a' + i;
+        int oper = 0;
+        for(int j=0; j<n; j++){
+            if(aa[j]=='?')aa[j] = ques;
+            if(bb[j]=='?')bb[j] = ques;
+            if(aa[j]==bb[j])continue;
+            else {
+                bool fa = 0,fb = 0;
+                for(auto k:vowel){
+                    if(aa[j]==k)fa=1;
+                    if(bb[j]==k)fb=1;
+                }
+                if(fa == fb){
+                    oper+=2;
+                }
+                else oper++;
+            }
+        }
+        ans = min(ans,oper);
     }
     cout << ans << '\n';
 }
-
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    
     cout << fixed << setprecision(10);
+    
     int tt=1;
     cin >> tt;
     

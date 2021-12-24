@@ -92,31 +92,86 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
-
-int lcm(int a,int b){
-    int gc = __gcd(a,b);
-    return (a*b)/gc;
-}
-
+ 
 void solve(){
     int n;
-    cin>>n;
-    int ans = n%mod;
-    int start = 1;
-    for(int i=1; start <= n; i++){
-        start = lcm(start,i);
-        ans+=(n/start);
-        int val = start;
-        // debug(i,val);
-        ans%=mod;
+    cin >> n;
+    vi a(n);
+    for(auto &i:a)cin >> i;
+    sort(all(a));
+    vi pref = a;
+    reverse(all(pref));
+    for(int i=1; i<n; i++){
+        pref[i]+=pref[i-1];
     }
-    cout << ans << '\n';
+    int track = n;
+    for(int i=0; i<n; i++){
+        if(a[i] > i){
+            track = i;
+            break;
+        }
+    }
+    map<int,int> cnt;
+    for(auto i : a){
+        cnt[i]++;
+    }
+    int mex = 0;
+    for(int i=0; i<=n; i++){
+        if(cnt.find(mex)==cnt.end()) break;
+        mex++;
+    }
+    vi have;
+    for(int i=0; i<mex; i++){
+        for(int j=0; j<cnt[i]-1; j++){
+            have.pb(i);
+        }
+    }
+    reverse(all(have));
+    // vi pref = have;
+    int m = (int)have.size();
+    for(int i=1; i<m; i++){
+        have[i]+=have[i-1];
+    }
+    debug(a);
+    int sum = mex, start = 0;
+    for(int i=0 ;i<=n; i++){
+        if(i > track){
+            cout << -1 << " ";
+        }
+        else {
+            if(i < mex){
+                cout << cnt[i] << ' ';
+            }
+            else if (i==mex){
+                cout << 0 << " ";
+            }
+            else {
+                
+                int lb = upper_bound(all(a), i-1) - a.begin();
+                lb--;
+                if(lb+1 > i){
+                    lb = i-1;
+                }
+                else {
+                    cout << sum - have[start] + cnt[i] << ' ';
+                    start++;
+                    sum+=i;
+                    continue;
+                }
+                int req = (i*(i-1))/2;
+                int hv = pref[lb];
+                cout << req - hv + cnt[i] << ' ';
+            }
+        }
+    }
+    cout << '\n';
 }
-
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    
     cout << fixed << setprecision(10);
+    
     int tt=1;
     cin >> tt;
     

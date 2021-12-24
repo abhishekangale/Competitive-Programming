@@ -93,30 +93,58 @@ void debug_out(Head H, Tail... T) {
  
 const int mod = 1e9 + 7;
 
-int lcm(int a,int b){
-    int gc = __gcd(a,b);
-    return (a*b)/gc;
-}
 
 void solve(){
-    int n;
-    cin>>n;
-    int ans = n%mod;
-    int start = 1;
-    for(int i=1; start <= n; i++){
-        start = lcm(start,i);
-        ans+=(n/start);
-        int val = start;
-        // debug(i,val);
-        ans%=mod;
+    int a,s;
+    cin >> a >> s;
+    string ans;
+    while(a>0 && s>0){
+        int la = a%10 , ls = s%10;
+        a/=10,s/=10;
+        if(ls >= la){
+            int add = ls-la;
+            ans+='0'+add;
+        }
+        else {
+            if(s == 0){
+                cout << -1 << '\n';
+                return;
+            }
+            ls += (s%10)*10;
+            s/=10;
+            if(ls - la >=10){
+                cout << -1 << '\n';
+                return;
+            }
+            ans+= '0' + (ls - la);
+        }
     }
+    if(a!=0){
+        cout << -1 << '\n';
+        return;
+    }
+    
+    while(ans.back()=='0'){
+        if(ans.size()==1) break;
+        ans.pop_back();
+    }
+
+    // reverse(all(ans));
+    while(s!=0){
+        ans+=s%10 + '0';
+        s/=10;
+    }
+    // reverse(all(ans));
+
+    reverse(all(ans));
     cout << ans << '\n';
 }
-
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    
     cout << fixed << setprecision(10);
+    
     int tt=1;
     cin >> tt;
     

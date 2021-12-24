@@ -94,7 +94,29 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
+    int n,t,k;
+    cin >> n >> t >> k;
     
+    int l = 1, r = n, ans = 0;
+   
+    while(l <= r){
+        int mid = (l+r)/2;
+        int lq;
+        cout << "? " << 1 << " " << mid << endl;
+        cin >> lq;
+
+        int zero = mid - lq;
+        
+        if(zero <= k-1){
+            l = mid + 1;
+            ans = mid;
+        }
+        else {
+            r = mid - 1;
+        }
+    }
+   
+    cout << "! " << ans+1 << endl;
 }
 signed main(){
     ios_base::sync_with_stdio(false);

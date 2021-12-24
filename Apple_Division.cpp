@@ -93,32 +93,59 @@ void debug_out(Head H, Tail... T) {
  
 const int mod = 1e9 + 7;
 
-int lcm(int a,int b){
-    int gc = __gcd(a,b);
-    return (a*b)/gc;
+int diff = LLONG_MAX;
+
+int recurse(int **a, int idx, int s1, int s2){
+
+    if(idx < 0) return 0;
+    if(idx == 0){
+        diff = min(diff , abs(s1-s2));
+    }
+    recurse(a, idx-1 , s1+a[idx] , s2);
+    recurse(a, idx-1, s1 , s2+a[idx]);
+
 }
 
 void solve(){
     int n;
-    cin>>n;
-    int ans = n%mod;
-    int start = 1;
-    for(int i=1; start <= n; i++){
-        start = lcm(start,i);
-        ans+=(n/start);
-        int val = start;
-        // debug(i,val);
-        ans%=mod;
+    cin >> n;
+    vi a(n);
+    for(auto &i:a)cin >> i;
+    int sum = 0;
+    for(int i=0; i<n; i++){
+        sum+=a[i];
     }
-    cout << ans << '\n';
-}
+    
+    int diff = LLONG_MAX;
 
+    for(int i=0; i<(1<<n); i++){
+        int set1 = 0;
+        for(int j=0; j<n; j++){
+            if(i & (1<<j)){
+                set1+=a[j];
+            }
+        }
+        int set2 = sum - set1;
+        diff = min(diff, abs(set1-set2));
+    }
+
+    cout << diff;
+
+    vector<vector<int>> a;
+    // {1}, {2,3,4}, {2,3}
+
+    int n = 3 , m = 4;
+    
+    
+}
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    
     cout << fixed << setprecision(10);
+    
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

@@ -92,31 +92,30 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
-
-int lcm(int a,int b){
-    int gc = __gcd(a,b);
-    return (a*b)/gc;
-}
-
+ 
 void solve(){
-    int n;
-    cin>>n;
-    int ans = n%mod;
-    int start = 1;
-    for(int i=1; start <= n; i++){
-        start = lcm(start,i);
-        ans+=(n/start);
-        int val = start;
-        // debug(i,val);
-        ans%=mod;
+    string s;
+    cin >> s;
+    int n = (int)s.size();
+    if(n%2){
+        cout << "NO\n";
+        return;
     }
-    cout << ans << '\n';
+    string a = s.substr(0,n/2);
+    string b = s.substr(n/2,n/2);
+    if(a==b){
+        cout << "YES\n";
+    }
+    else {
+        cout << "NO\n";
+    }
 }
-
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    
     cout << fixed << setprecision(10);
+    
     int tt=1;
     cin >> tt;
     
