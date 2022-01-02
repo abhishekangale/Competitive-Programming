@@ -92,13 +92,43 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
+vi primes;
+void sieve(int n){
+    bool prime[n + 1];
+    memset(prime, true, sizeof(prime));
  
+    for (int p = 2; p * p <= n; p++){
+        if (prime[p] == true)
+        {
+            for (int i = p * p; i <= n; i += p)
+                prime[i] = false;
+        }
+    }
+    for (int p = 2; p <= n; p++)
+        if (prime[p])
+            primes.pb(p);
+}
+
 void solve(){
-    int n,m,k;
-    cin >> n >> m >> k;
-    vi a(n), b(m);
-    for(auto &i:a)cin >> i;
-    for(auto &i:b)cin >> i;
+    int n;
+    cin >> n;
+    map<int,int> a;
+    int temp = n;
+    int curmax = n, count = 0;
+    for(int i = 0; i<(int)primes.size(); i++){
+        if(temp == 1)break;
+        int cnt = 0;
+        while(temp%primes[i] == 0){
+            cnt++;
+            temp/=primes[i];
+        }
+        if(cnt > count){
+            curmax = primes[i];
+            count = cnt;
+        }
+    }
+    
+    cout << curmax << '\n';
     
 }
 signed main(){
@@ -106,7 +136,7 @@ signed main(){
     cin.tie(NULL);
     
     cout << fixed << setprecision(10);
-    
+    sieve(40000);
     int tt=1;
     cin >> tt;
     

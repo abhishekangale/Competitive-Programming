@@ -94,12 +94,42 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,m,k;
-    cin >> n >> m >> k;
-    vi a(n), b(m);
+    int n;
+    cin >> n;
+    vi a(n);
     for(auto &i:a)cin >> i;
+    int m;
+    cin >> m;
+    vi b(m);
     for(auto &i:b)cin >> i;
-    
+    int ans = 0;
+    int sum=0, sum1=0;
+    int l=0, l1=0;
+    while(l<n && l1<m){
+        if(sum1 == sum)sum+=a[l],sum1+=b[l1];
+        else if(sum1 < sum){
+            sum1 += b[l1];
+        }
+        else{
+            sum += a[l];
+        }
+        if(sum == sum1){
+            ans++;
+            l++;
+            l1++;
+            sum = sum1 = 0;
+        }
+        else if(sum > sum1){
+            l1++;
+        }
+        else {
+            l++;
+        }
+        // debug(sum, sum1);
+    }
+    // debug(l,l1);
+    if(sum != 0 || sum1!= 0 || l!=n || l1!=m) cout << -1 << '\n';
+    else cout << ans;
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -108,7 +138,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    // cin >> tt;
     
     while(tt--){
         solve();

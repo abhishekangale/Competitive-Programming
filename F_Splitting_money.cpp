@@ -94,12 +94,25 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,m,k;
-    cin >> n >> m >> k;
-    vi a(n), b(m);
+    int n;
+    cin >> n;
+    vi a(n);
     for(auto &i:a)cin >> i;
-    for(auto &i:b)cin >> i;
-    
+    int k,x;
+    int ans = 0;
+    cin >> k >> x;
+
+    for(int i=0; i<n; i++){
+        if(a[i] <= k)continue;
+        int cur = 2;
+        int mid = (a[i]/2), mid1 = (a[i]+1)/2;
+        while(mid > k && mid1 > k){
+            cur*=2;
+            mid/=2;
+            
+        }
+
+    }
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -108,7 +121,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

@@ -94,12 +94,29 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,m,k;
-    cin >> n >> m >> k;
-    vi a(n), b(m);
-    for(auto &i:a)cin >> i;
-    for(auto &i:b)cin >> i;
-    
+    int n;
+    cin >> n;
+    int ans = 0;
+    int pp = 1;
+    for(int i=0; i<n; i++){
+        pp*=3;
+    }
+    for(int i=0; i<pp; i++){
+        vi a(n,0);
+        string xd;
+        int mask = i;
+        int st = 0;
+        while(mask){
+            a[st] = mask%3;
+            mask/=3;
+            st++;
+        }
+        for(int i=1; i<n-1; i++){
+            if(a[i] > a[i-1] && a[i] > a[i+1])ans++;
+            else if(a[i] < a[i-1] && a[i] < a[i+1])ans++;
+        }
+    }
+    cout << ans << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);

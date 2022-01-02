@@ -94,12 +94,26 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,m,k;
-    cin >> n >> m >> k;
-    vi a(n), b(m);
-    for(auto &i:a)cin >> i;
-    for(auto &i:b)cin >> i;
-    
+   int n,k, ans = 0;
+   cin >> n >> k;
+   string s;
+   cin >> s;
+   int sum = 0;
+   for(int i=0; i<=n-k; i++){
+       sum += s[i] - '0';
+   }
+   if(sum % 2)ans++;
+   int l = n-k+1;
+   while(l < n){
+    //    debug(sum);
+       sum += s[l] - '0';
+       sum -= s[l - (n-k+1)] - '0';
+       if(sum % 2)ans++;
+       l++;
+   }
+
+   cout << ans << '\n';
+
 }
 signed main(){
     ios_base::sync_with_stdio(false);
