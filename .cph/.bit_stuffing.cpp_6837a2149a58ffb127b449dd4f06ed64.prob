@@ -1,0 +1,1 @@
+{"name":"Local: bit_stuffing","url":"c:\\Users\\pooja\\Desktop\\CP\\bit_stuffing.cpp","tests":[{"id":1629522579036,"input":"110101111101011111101011111110","output":"110101111100101111101010111110110"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\pooja\\Desktop\\CP\\bit_stuffing.cpp","group":"local","local":true}

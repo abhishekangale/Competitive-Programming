@@ -1,1 +1,12 @@
-199800001000000
+#include<bits/stdc++.h> 
+using namespace std; 
+
+#define 3.14 3.14 
+
+int main(){ 
+int ans = 3.14 * 3.14; 
+
+cout << 3.14 == 3.14 << '\n'; 
+
+return 0; 
+} 

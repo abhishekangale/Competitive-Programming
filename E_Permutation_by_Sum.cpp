@@ -8,7 +8,7 @@ template <typename T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree
 // oset Operations: order_of_key(k) -> Number of elements strictly smaller than k, find_by_order(k) -> kth element in the set
  
 #define ull unsigned long long int
-#define int long long int
+#define int long long
 #define pb push_back
 #define eb emplace_back
 #define all(x) x.begin(),x.end()
@@ -94,27 +94,72 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n,l,r,s;
-    cin>>n>>l>>r>>s;
-    set<int,greater<int>> a;
-    vector<int> ans(n);
-    for(int i=1;i<=n;i++){
-        int x;
-        cin>>x;
-        a.insert(x);
+    int n, l, r, s;
+    cin >> n >> l >> r >> s;
+
+    int len = (abs(l - r) + 1);
+    int mn = 0, mx = 0;
+    for(int i = 1; i <= len; i++) mn += i, mx += (n - i + 1);
+
+    if(s < mn || s > mx){
+        cout << -1 << '\n';
+        return;
     }
-    int sum=0;
-    while(1){
-        if(a.empty()) break;
-        int l=*a.begin();
-        sum+=l;
-        a.erase(a.begin());
-        debug(a);
-        if(sum>s) {sum-=l;}
-        else if(sum==s) {break;}
+
+    vi ans(n+1, -1);
+
+    set<int, greater<int>> ms;
+    for(int i = 1; i <= len; i++) ms.insert(i);
+    s -= mn;
+    int last = n;
+    set<int> ne;
+    while(s){
+        int x = *ms.begin();
+        ms.erase(x);
+        int submax;
+        if((last - x) > (s)){
+            submax = s;
+        }
+        else {
+            submax = last - x;
+        }
+        // debug(x, submax, s);
+        x += submax;
+        ne.insert(x);
+        last--;
+        s -= submax;
     }
-    cout<<sum<<'\n';
+    cerr << '\n';
+    for(auto i : ms){
+        ne.insert(i);
+    }
+    // debug(ne);
+    vector<bool> vis(n+1, 0);
+    for(auto i : ne){
+        vis[i] = 1;
+        ans[l++] = i;
+    }
+    // debug(ne);
+    // debug(ans);
+    int j = 1;
+    for(int i = 1; i <= n; i++){
+        if(ans[i] == -1){
+            while(vis[j] == 1)j++;
+            ans[i] = j;
+            j++;
+        }
+    }
+
+    for(int i = 1; i <= n; i++){
+        cout << ans[i] << " ";
+    }
+
+    cout << '\n';
+
+
+
 }
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);

@@ -1,0 +1,12 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pi 3.14
+
+int main(){
+    int ans = pi * pi;
+
+    cout << pi == 3.14 << '\n';   
+
+    return 0;
+}

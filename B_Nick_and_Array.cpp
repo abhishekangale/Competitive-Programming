@@ -95,13 +95,35 @@ const int mod = 1e9 + 7;
  
 void solve(){
     int n;
-    cin>>n;
+    cin >> n;
     vi a(n);
-    for(auto &i:a)cin>>i;
-    sort(all(a));
-    for(int i=0;i<n;i++){
-        
+    for(auto &i : a)cin >> i;
+
+    int neg = 0;
+    map<int,vector<int>, greater<int>> mp;
+    for(int i = 0; i < n; i++){
+        neg += (a[i] < 0);
+        mp[a[i]].pb(i);
     }
+
+    int pos = n - neg;
+    if(neg % 2 != pos % 2){
+        pos--;
+    }
+
+    for(auto &i : mp){
+        if(!pos)break;
+        for(auto j : i.S){
+            a[j] = -i.F - 1; 
+            pos--;
+            if(!pos)break;
+        }
+    }
+
+    for(auto i : a){
+        cout << i << " ";
+    }
+
 }
 signed main(){
     ios_base::sync_with_stdio(false);
