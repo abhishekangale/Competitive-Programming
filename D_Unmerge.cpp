@@ -94,35 +94,16 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n, m;
-    cin >> n >> m;
-    int cn, cm;
-    cin >> cn >> cm;
-    int nn, mm;
-    cin >> nn >> mm;
+    int n;
+    cin >> n;
+    vi a(2*n);
+    for(auto &i : a)cin >> i;
+    reverse(all(a));
     
-    if(nn > mm){
-        swap(nn, mm);
-        swap(cn, cm);
-    }
 
-    int ans = 0;
-    for(int i = 0; i <= min(cn, n/nn); i++){
-        int tcn = cn, tcm = cm;
-        int a = i;
-        tcn -= i;
-        int rem = n - a*nn;
-        int b = min(rem/mm, tcm);
-        tcm -= b;
-
-        int c = min(tcn, m/nn);
-        int rema = m - nn*c;
-        int d = min(tcm, rema/mm);
-        ans = max(ans, a+b+c+d);
-    }
-
-    cout << ans << '\n';
+    cout << "YES\n";
 }
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);

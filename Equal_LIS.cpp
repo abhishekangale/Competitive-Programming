@@ -92,36 +92,39 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+
+
+
 void solve(){
-    int n, m;
-    cin >> n >> m;
-    int cn, cm;
-    cin >> cn >> cm;
-    int nn, mm;
-    cin >> nn >> mm;
-    
-    if(nn > mm){
-        swap(nn, mm);
-        swap(cn, cm);
+    int n;
+    cin >> n;
+
+    if(n == 2){
+        cout << "NO" << '\n';
+        return;
+    }
+    if(n % 2){
+        cout << "YES\n";
+        for(int i = 1; i <= n/2; i++){
+            cout << i << " ";
+        }
+        for(int i = n; i > n/2; i--){
+            cout << i << " ";
+        }
+        cout << '\n';
     }
 
-    int ans = 0;
-    for(int i = 0; i <= min(cn, n/nn); i++){
-        int tcn = cn, tcm = cm;
-        int a = i;
-        tcn -= i;
-        int rem = n - a*nn;
-        int b = min(rem/mm, tcm);
-        tcm -= b;
-
-        int c = min(tcn, m/nn);
-        int rema = m - nn*c;
-        int d = min(tcm, rema/mm);
-        ans = max(ans, a+b+c+d);
+    else{
+        cout << "YES\n";
+        for(int i = 1; i <= n/2 - 2; i++){
+            cout << i << " ";
+        }
+        cout << n/2 << " " << n/2 - 1 << " ";
+        for(int i = n; i > n/2; i--){
+            cout << i << " ";
+        }
+        cout << '\n';
     }
-
-    cout << ans << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);

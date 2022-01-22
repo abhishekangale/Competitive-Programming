@@ -92,36 +92,35 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+
 void solve(){
-    int n, m;
-    cin >> n >> m;
-    int cn, cm;
-    cin >> cn >> cm;
-    int nn, mm;
-    cin >> nn >> mm;
+
+    string S;
+    cin >> S;
+    int N = (int)S.size();
+
+    vi blocks;
+    int count = 0;
+    for(int i = 0; i < N; i++){
+        if(S[i] == 'a')count++;
+        if(S[i] == 'b' && count != 0){
+            blocks.pb(count);
+            count = 0;
+        }
+    }
+
+    if(S[N-1] != 'b' && count != 0){
+        blocks.pb(count);
+    }
+
+    int ans = 1;
+    for(auto i : blocks){
+        ans *= (i + 1);
+        ans %= mod;
+    }
     
-    if(nn > mm){
-        swap(nn, mm);
-        swap(cn, cm);
-    }
-
-    int ans = 0;
-    for(int i = 0; i <= min(cn, n/nn); i++){
-        int tcn = cn, tcm = cm;
-        int a = i;
-        tcn -= i;
-        int rem = n - a*nn;
-        int b = min(rem/mm, tcm);
-        tcm -= b;
-
-        int c = min(tcn, m/nn);
-        int rema = m - nn*c;
-        int d = min(tcm, rema/mm);
-        ans = max(ans, a+b+c+d);
-    }
-
-    cout << ans << '\n';
+    ans = (ans - 1 + mod) % mod;
+    cout << ans;
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -130,7 +129,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

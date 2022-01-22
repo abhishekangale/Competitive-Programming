@@ -94,31 +94,41 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n, m;
-    cin >> n >> m;
-    int cn, cm;
-    cin >> cn >> cm;
-    int nn, mm;
-    cin >> nn >> mm;
-    
-    if(nn > mm){
-        swap(nn, mm);
-        swap(cn, cm);
+    int n,x;
+    cin >> n >> x;
+    string s;
+    cin >> s;
+    vpii store;
+    int one = 0, zero = 0;
+     int ans = 0;
+    for(auto i : s){
+        one += i == '1';
+        zero += i == '0';
+        store.pb({one, zero});
+        if((zero - one) == x)ans++;
     }
 
-    int ans = 0;
-    for(int i = 0; i <= min(cn, n/nn); i++){
-        int tcn = cn, tcm = cm;
-        int a = i;
-        tcn -= i;
-        int rem = n - a*nn;
-        int b = min(rem/mm, tcm);
-        tcm -= b;
+    if(one == zero && (x == 1 || x == 0)){
+        cout << -1 << '\n';
+        return;
+    }
 
-        int c = min(tcn, m/nn);
-        int rema = m - nn*c;
-        int d = min(tcm, rema/mm);
-        ans = max(ans, a+b+c+d);
+    if(one == zero){
+        cout << 0 << '\n';
+        return;
+    }
+
+    if(x == 0){
+        cout << 1 << '\n';
+        return;
+    }
+    
+    for(auto i : store){
+        int coeff = zero - one;
+        int val = -i.S + i.F + x;
+        if(val > 0 && coeff > 0 && val % coeff == 0 ){
+            ans++;
+        }
     }
 
     cout << ans << '\n';

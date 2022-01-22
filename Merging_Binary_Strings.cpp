@@ -91,38 +91,51 @@ void debug_out(Head H, Tail... T) {
  
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
-const int mod = 1e9 + 7;
- 
-void solve(){
-    int n, m;
-    cin >> n >> m;
-    int cn, cm;
-    cin >> cn >> cm;
-    int nn, mm;
-    cin >> nn >> mm;
-    
-    if(nn > mm){
-        swap(nn, mm);
-        swap(cn, cm);
-    }
+const int mod = 1e9 + 7;  
 
-    int ans = 0;
-    for(int i = 0; i <= min(cn, n/nn); i++){
-        int tcn = cn, tcm = cm;
-        int a = i;
-        tcn -= i;
-        int rem = n - a*nn;
-        int b = min(rem/mm, tcm);
-        tcm -= b;
+string minimum(vector <string> w) {
+  int i,j,k;
+  string res;
 
-        int c = min(tcn, m/nn);
-        int rema = m - nn*c;
-        int d = min(tcm, rema/mm);
-        ans = max(ans, a+b+c+d);
-    }
+  for(int i = 0; i < (int)w.size(); i++) w[i] += 'Z'+1;
 
-    cout << ans << '\n';
+  while(w.size()){
+    sort(w.begin(),w.end());
+    res += w[0][0];
+    w[0].erase(w[0].begin());
+    if(w[0].size()==1) w.erase(w.begin());
+  }
+
+  return res;
 }
+
+void solve(){
+    int n;
+    cin >> n;
+    string s,t;
+    cin >> s >> t;
+    vector<string> xd;
+    xd.pb(s);
+    xd.pb(t);
+    string ans = minimum(xd);
+    int a[2*n];
+
+    for(int i = 0; i < 2*n; i++){
+        a[i] = ans[i] - '0';
+    }
+    int inv = 0;
+    for(int i = 0; i < 2*n; i++){
+        if(a[i] == 0){
+            for(int j = 0; j < i; j++){
+                inv += (a[j] == 1);
+            }
+        }
+    }
+
+    cout << inv << '\n';
+}
+
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);

@@ -95,14 +95,25 @@ const int mod = 1e9 + 7;
  
 void solve(){
     int n;
-    cin>>n;
-    vector<string> ans;
-    map<int,int> a;
-    string s="1";
-    for(int i=0;i<n;i++){
-        int x;
-        cin>>x;
-        if(!a[x]) {a[x]++;ans.pb(s);
+    cin >> n;
+    vi ans;
+    for(int i = 0; i < n; i++){
+        int val;
+        cin >> val;
+        if(val == 1){
+            ans.pb(val);
+        }
+        else {
+            while(!ans.empty() && ans[ans.size() - 1] != val - 1)ans.pop_back();
+            if(ans.empty())ans.pb(val);
+            else ans[(int)ans.size() - 1] = val;
+        }
+
+        for(int i = 0; i < (int)ans.size(); i++){
+            cout << ans[i];
+            if(i < (int)ans.size() - 1) cout << '.';
+        }
+        cout << '\n';
     }
 }
 signed main(){

@@ -94,34 +94,43 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int n, m;
-    cin >> n >> m;
-    int cn, cm;
-    cin >> cn >> cm;
-    int nn, mm;
-    cin >> nn >> mm;
+    string S;
+    cin >> S;
+    int b = 0, s = 0, c = 0;
+    for(auto i : S){
+        b += (i == 'B');
+        s += (i == 'S');
+        c += (i == 'C');
+    }
+    int x, y, z, cb, cs, cc, n;
+    cin >> x >> y >> z >> cb >> cs >> cc >> n;
+    int ans = LLONG_MAX;
+    if(b!=0) ans = min(ans, x/b);
+    if(s!=0) ans = min(ans, y/s);
+    if(c!=0) ans =min(ans, z/c);
+    // debug(ans);
+    if(ans == LLONG_MAX)ans = 0;
+    x -= ans*b, y -= ans*s, z-= ans*c;
     
-    if(nn > mm){
-        swap(nn, mm);
-        swap(cn, cm);
+    // debug(x,y,z);    
+    int canmake = 0;
+    int l = 0, r = (int)1e15;
+    while(l <= r){
+        int mid = l + (r-l)/2;
+        int sb = b*mid, ss = s*mid, sc = c*mid;
+        int reqm = cb*max(0LL, sb - x) + cs*max(0LL, ss - y) + cc*max(0LL, sc - z);
+        if(n >= reqm){
+            canmake = mid;
+            l = mid + 1;
+        }
+        else {
+            r = mid - 1;
+        }
     }
+    // debug(ans);
+    cout << ans + canmake;
 
-    int ans = 0;
-    for(int i = 0; i <= min(cn, n/nn); i++){
-        int tcn = cn, tcm = cm;
-        int a = i;
-        tcn -= i;
-        int rem = n - a*nn;
-        int b = min(rem/mm, tcm);
-        tcm -= b;
 
-        int c = min(tcn, m/nn);
-        int rema = m - nn*c;
-        int d = min(tcm, rema/mm);
-        ans = max(ans, a+b+c+d);
-    }
-
-    cout << ans << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -130,7 +139,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();
