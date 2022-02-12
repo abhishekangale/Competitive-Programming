@@ -94,17 +94,50 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
-        }
-    }
+    int n, k;
+    cin >> n >> k;
+    k -= n;
+    bool f = 0;
+    vi out;
+    int l = 1, r = n;
+    int ans = 0;
+    while(l <= r){
+        int mid = (l + r)/2;
+        int num = (mid*(mid - 1))/2;
 
-    cout << -1 << '\n';
+        if(num <= k){
+            ans = mid;
+            l = mid + 1;
+        }
+        else r = mid - 1;
+    }
+        for(int i = 1; i <= ans; i++){
+            out.pb(i);
+        }
+        f = 1;
+    k -= (ans*(ans-1))/2;
+
+    if(out.empty()){
+        for(int i = 1; i <= n; i++){
+            cout << 1 << " ";
+        }
+        cout << '\n';
+    }
+    else {
+        int remain = n - (int)out.size() - 1;
+        int last = out.back();
+        out.insert(out.begin()+(int)out.size() - k - 1, last);
+        while(remain > 0){
+            out.pb(last);
+            remain--;
+        }
+        
+        for(int i = 0; i < n; i++){
+            cout << out[i] << ' ';
+        }
+        cout << '\n';
+        
+    }
 
 }
 signed main(){

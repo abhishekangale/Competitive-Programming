@@ -94,18 +94,48 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int n;
+    cin >> n;
+    string s, t;
+    cin >> s >> t;
+    vpii ans;
+    for(int i = 0; i < n; i++){
+        if(s[i] == t[i])continue;
+        else {
+            bool f = 0;
+            for(int j = i + 1; j < n; j++){
+                if(s[j] == s[i]){
+                    ans.pb({j, i});
+                    swap(s[j], t[i]);
+                    f = 1;
+                    break;
+                }
+            }
+
+            if(!f){
+                for(int j = i + 1; j < n; j++){
+                    if(s[i] == t[j]){
+                        ans.pb({j ,j});
+                        swap(s[j], t[j]);
+                        ans.pb({j, i});
+                        swap(s[j], t[i]);
+                        f = 1;
+                        break;
+                    }
+                }
+                if(!f){
+                    cout << "No\n";
+                    return;
+                }
+            }
         }
     }
 
-    cout << -1 << '\n';
-
+    cout << "Yes\n";
+    cout << (int)ans.size() << '\n';
+    for(auto i : ans){
+        cout << i.F+1 << " " << i.S+1 << '\n';
+    }
 }
 signed main(){
     ios_base::sync_with_stdio(false);

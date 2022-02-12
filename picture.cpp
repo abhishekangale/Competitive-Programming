@@ -92,20 +92,43 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
-void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+
+int countRectangles(set<pair<int,int>> points){
+    int answer = 0;
+
+    for(auto i=points.begin(); i!=std::prev(points.end()); i++)
+    {
+        for(auto j= next(i); j!=points.end(); j++)
+        {
+            pair<int, int> p1 = *i;
+            pair<int, int> p2 = *j;
+
+            if(p1.first == p2.first || p1.second == p2.second)
+                continue;
+
+            pair<int, int> p3 = make_pair(p1.first, p2.second);
+            pair<int, int> p4 = make_pair(p2.first, p1.second);
+
+            if(points.find(p3) != points.end() && points.find(p4) != points.end())
+                ++answer;
         }
     }
 
-    cout << -1 << '\n';
+    return answer/2;
+}
+ 
 
+void solve(){
+    set<pair<int,int>> s;
+    int n;
+    cin >> n;
+    for(int i = 0; i <n; i++){
+        int x, y;
+        cin >> x >> y;
+        s.insert({x,y});
+    }
+
+    cout << countRectangles(s);
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -114,7 +137,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

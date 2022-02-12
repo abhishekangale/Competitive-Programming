@@ -94,18 +94,27 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int n, k;
+    cin >> n >> k;
+    string s;
+    cin >> s;
+    int cnt = 0;
+    multiset<int, greater<int>> ms; 
+    for(int i = 0; i < n; i++){
+        if(s[i] == '0')cnt++;
+        else {
+            ms.insert(cnt);
+            cnt = 0;
         }
     }
+    ms.insert(cnt);
+    vi b(all(ms));
+    int ans = 0;
+    for(int i = 0; i < min(k, (int)b.size()); i++){
+        ans += b[i];
+    }
 
-    cout << -1 << '\n';
-
+    cout << ans;
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -114,7 +123,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

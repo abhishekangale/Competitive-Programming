@@ -94,17 +94,41 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int n;
+    cin >> n;
+    vi a(2*n);
+    for(int i = 0; i < 2*n; i++){
+        cin >> a[i];
+    }
+
+    sort(all(a));
+
+    set<int> x,y;
+    for(int i = 0; i < 2*n; i++){
+        if(i % 2)x.insert(a[i]);
+        else y.insert(a[i]);
+    }
+    int mex1, mex2;
+    for(int i = 0; i <= n+1; i++){
+        if(x.find(i)==x.end()){
+            mex1 = i;
+            break;
         }
     }
 
-    cout << -1 << '\n';
+    for(int i = 0; i <= n+1; i++){
+        if(y.find(i)==y.end()){
+            mex2 = i;
+            break;
+        }
+    }
+
+    if(mex1 != mex2){
+        cout << "NO\n";
+    }
+    else {
+        cout << "YES\n";
+    }
 
 }
 signed main(){

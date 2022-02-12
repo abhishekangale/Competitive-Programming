@@ -94,17 +94,45 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int k;
+    cin >> k;
+    int n = 3;
+    vvi a(n, vi(n));
+    a = {
+        {1 , 1 , 1},
+        {1 , 1 , 1},
+        {1 , 1 , 1}
+    };
+    queue<pair<pii, int>> q;
+    q.push({{0, 0} , a[0][0]}); 
+    int ans = LLONG_MIN, ans1 = LLONG_MIN;
+    while(!q.empty()){
+        auto x = q.front();
+        q.pop();
+        if(x.F.F == n-1 && x.F.S == n-1){
+            ans = max(ans, x.S);
+            continue;
+        }
+        if(x.F.F + 1 < n){
+            q.push({{x.F.F + 1, x.F.S }, (x.S & a[x.F.F + 1][x.F.S])});
+        }
+        if(x.F.S + 1 < n){
+            q.push({{x.F.F, x.F.S + 1}, (x.S & a[x.F.F][x.F.S + 1])});
+        }
+
+    }
+    
+    
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            if(i == 0 && j == 0)continue;
+            a[i][j] = max((i-1>=0?a[i-1][j]:0LL) & a[i][j], (j-1>=0?a[i][j-1]:0LL) & a[i][j]);
         }
     }
 
-    cout << -1 << '\n';
+    ans1 = a[n-1][n-1];
+
+    debug(ans, ans1);
 
 }
 signed main(){
@@ -114,7 +142,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

@@ -94,17 +94,73 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int n;
+    cin >> n;
+    vi a(n);
+    for(auto &i : a)cin >> i;
+    int odd = 0, even = 0, oper1 = 0, oper2 = 0;
+    for(int i = 0; i < n; i++){
+        odd += a[i] % 2;
+        if(i % 2){
+            if(a[i] % 2)oper1++;
+            else oper2++;
+        }
+        else {
+            if(a[i] % 2 == 0)oper1++;
+            else oper2++;
         }
     }
 
-    cout << -1 << '\n';
+    even = n - odd;
+    if(!odd){
+        cout << -1 << '\n';
+        return;
+    }
+
+    if(oper1 < oper2){
+        int odd = 0, even = 0;
+        for(int i = 0; i < n; i += 2){
+            if(a[i] % 2){
+                odd = i;
+                break;
+            }
+        }
+        cout << oper1 << '\n';
+        for(int i = 0; i < n; i++){
+            if(i % 2){
+                if(a[i] % 2){
+                    cout << i + 1 << " " << odd + 1 << '\n';
+                } 
+            }
+            else {
+                if(a[i] % 2 == 0){
+                    cout << i + 1 << " " << odd + 1 << '\n';
+                }
+            }
+        }
+    }
+    else {
+        int odd = 0, even = 0;
+        for(int i = 1; i < n; i += 2){
+            if(a[i] % 2){
+                odd = i;
+                break;
+            }
+        }
+        cout << oper2 << '\n';
+        for(int i = 0; i < n; i++){
+            if(i % 2){
+                if(a[i] % 2 == 0){
+                    cout << i + 1 << " " << odd + 1 << '\n';
+                } 
+            }
+            else {
+                if(a[i] % 2){
+                    cout << i + 1 << " " << odd + 1 << '\n';
+                }
+            }
+        }
+    }
 
 }
 signed main(){

@@ -94,19 +94,95 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int n;
+    cin >> n;
+    if(n % 4 == 3){
+        cout << n << '\n';
+    }
+    else if(n % 4 == 1){
+        if((n/4) % 2){
+           int xo = 0;
+           for(int i = 1; i<=n+4; i++){
+               if(i == 2 || i == 1 || i == 5 || i == 7)continue;
+               xo ^= i;
+           }
+           if(xo != 0){
+               cout << "!" << n << '\n';
+               return;
+           }
+            
+            cout << n + 4 << '\n';
+            cout << "1 2 5 7" << '\n';
+        }
+        else {
+            int xo = 0;
+            for(int i = 1; i<=n+3; i++){
+               if(i == 2 || i == 5 || i == (n+2))continue;
+               xo ^= i;
+           }
+           if(xo != 0){
+               cout << "!" << n << '\n';
+               return;
+           }
+
+            cout << n + 3 << '\n';
+            cout << "2 5 " << n + 2 << '\n';
         }
     }
-
-    cout << -1 << '\n';
-
+    else if(n % 4 == 2){
+        if((n/4) % 2){
+            int xo = 0;
+              for(int i = 1; i<=n+3; i++){
+               if(i == 2 || i == 4 || i == 7)continue;
+               xo ^= i;
+           }
+           if(xo != 0){
+               cout << "!" << n << '\n';
+               return;
+           }
+            cout << n + 3 << '\n';
+            cout << "2 4 7" << '\n';
+        }
+        else {
+            int xo = 0;
+              for(int i = 1; i<=n+2; i++){
+               if(i == 7 || i == (n+1))continue;
+               xo ^= i;
+           }
+           if(xo != 0){
+               cout << "!" << n << '\n';
+               return;
+           }
+            cout << n + 2 << '\n';
+            cout << "7 " << n+1 << '\n';
+        }
+       
+        // for(int mask = 0; mask < (1 << 20); mask++){
+        //     int xo = 0, cnt = 0;
+        //     for(int i = 0; i < 20; i++){
+        //         if(mask & (1 << (i))){
+        //             xo ^= (i + 1);
+        //             cnt++;
+        //         }
+        //     }
+        //     if(xo == 0 && cnt == 7){
+        //         cout << cnt << '\n';
+        //         for(int i = 0; i < 20; i++){
+        //             if((mask & (1 << i))){
+        //                 cout << i+1 << " ";
+        //             }
+        //         }
+        //         cout << '\n';
+        //     }
+        // }
+        
+    }
+    else {
+        cout << n + 1 << '\n';
+        cout << 1 << '\n';
+    }
 }
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);

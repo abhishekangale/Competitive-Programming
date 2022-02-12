@@ -94,18 +94,14 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
-        }
+    double n;
+    cin >> n;
+    double ans = 1;
+    for(int i = 0; i < n; i++){
+        ans *= (0.143*n);
     }
 
-    cout << -1 << '\n';
-
+    cout << (int)round(ans) << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);

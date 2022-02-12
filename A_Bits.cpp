@@ -96,17 +96,15 @@ const int mod = 1e9 + 7;
 void solve(){
     int l, r;
     cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    for(int i = 0; i < 64; i++){
+        if(!(l & (1LL << i))){
+            if((l + (1LL << i)) <= r)l += (1LL << i);
+            else break;
         }
     }
-
-    cout << -1 << '\n';
-
+    cout << l << '\n';
 }
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);

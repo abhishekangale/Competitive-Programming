@@ -94,18 +94,22 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int n;
+    cin >> n;
+    vi a(2*n);
+    for(auto &i : a)cin >> i;
+    bool f = 1;
+    sort(all(a));
+    int sum = a[0] + a[2*n - 1];
+    for(int i = 0; i < n; i++){
+        if((a[i] + a[2*n - i - 1]) != sum){
+            f = 0;
+            break;
         }
     }
 
-    cout << -1 << '\n';
-
+    if(f)cout << "YES\n";
+    else cout << "NO\n";
 }
 signed main(){
     ios_base::sync_with_stdio(false);

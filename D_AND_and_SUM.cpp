@@ -92,19 +92,37 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
+    int a, s;
+    cin >> a >> s;
+    if((s - 2*a) < 0){
+        cout << "No\n";
+    }
+    else {
+        int lmao = s - 2*a;
+        if(s%2 != lmao%2){
+            cout << "No\n";
             return;
         }
+        string A, S;
+        while(s){
+            S += char('0' + s%2);
+            s/=2;
+        }
+        while(a){
+            A += char('0' + s%2);
+            a/=2;
+        }
+        
+        for(int i = 0; i < min((int)A.size(), (int)S.size()); i++){
+            if(S[i] == '1' && A[i] == '1'){
+                cout << "No\n";
+                return;
+            }
+        }
+        cout << "Yes\n";
     }
-
-    cout << -1 << '\n';
 
 }
 signed main(){

@@ -94,17 +94,28 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
-        }
+    int n;
+    cin >> n;
+    vi a(n);
+    vi cuts = {0};
+    int sum = 0;
+    for(int i = 0; i < n; i++){
+        cin >> a[i];
+        sum += a[i];
+        sum%=360;
+        cuts.pb(sum);
     }
+   
+   sort(all(cuts));
+   cuts.pb(360);
+//    debug(cuts);
+   int mx = LLONG_MIN;
+   for(int i = 1; i < n+2; i++){
+       mx = max(mx, cuts[i] - cuts[i-1]);
+   }
 
-    cout << -1 << '\n';
+   cout << mx;
+
 
 }
 signed main(){
@@ -114,7 +125,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

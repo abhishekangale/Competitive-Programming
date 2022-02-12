@@ -94,19 +94,43 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int n;
+    cin >> n;
+    vi a(n);
+    for(auto &i : a)cin >> i;
+    vector<bool> vis(n, 0);
+    for(int i = 0; i < n; i++){
+        if(vis[i])continue;
+        vis[i] = 1;
+        int orr = a[i];
+        vi pos = {i};
+        for(int j = i + 1; j < n; j++){
+            if((orr & a[j]) > 0){
+                vis[j] = 1;
+                orr |= a[j];
+                pos.pb(j);
+            }
+        }   
+        vi ele;
+        for(auto i : pos){
+            ele.pb(a[i]);
+        }
+        sort(all(ele));
+        debug(ele);
+        for(int i = 0; i < (int)ele.size(); i++){
+            a[pos[i]] = ele[i];
         }
     }
 
-    cout << -1 << '\n';
-
+    debug(a);
+    if(is_sorted(all(a))){
+        cout << "Yes\n";
+    }
+    else {
+        cout << "No\n";
+    }
 }
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);

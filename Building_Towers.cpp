@@ -94,18 +94,13 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
-        }
+    int n, k;
+    cin >> n >> k;
+    int x = ceil(log2(n)) + 1;
+    if(x <= k){
+        cout << k - x + 1 << '\n';
     }
-
-    cout << -1 << '\n';
-
+    else cout << 0 << '\n';
 }
 signed main(){
     ios_base::sync_with_stdio(false);

@@ -92,20 +92,38 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+
+int max_length(string s){
+    int n = (int)s.size();
+    int ans = 1;
+    string a = s;
+    reverse(all(s));
+    a += s;
+    int ans = 0;
+    for(int i = 0; i < 2*n; i++){
+        d
+    }
+}
+
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
-        }
+    string s;
+    cin >> s;
+    int n = (int)s.size();
+
+    int l = 0, r = n - 1;
+    while(l <= r){
+        if(s[l] != s[r])break;
+        l++;
+        r--;
     }
 
-    cout << -1 << '\n';
+    if(l >= r){
+        cout << s << '\n';
+        return;
+    }
 
+    string a(s.begin() + l, s.begin() + r + 1);
+    
 }
 signed main(){
     ios_base::sync_with_stdio(false);

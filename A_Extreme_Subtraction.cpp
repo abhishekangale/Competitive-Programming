@@ -94,17 +94,15 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
-        }
+    int n;
+    cin >> n;
+    vi a(n);
+    for(auto &i: a)cin >> i;
+    
+    int sum = 0;
+    for(int i = 1; i < n; i++){
+        sum += a[i] - a[i - 1];
     }
-
-    cout << -1 << '\n';
 
 }
 signed main(){

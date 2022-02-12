@@ -92,20 +92,49 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+bool cmp(pii a, pii b){
+    int d1 = abs(a.F - 1) + abs(a.S - 1), d2 = abs(b.F - 1) + abs(b.S - 1);
+    return d1 < d2;
+}
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int n,m;
+    cin >> n >> m;
+    set<pii> ans;
+    for(int i = 1; i <= n; i++){
+        for(int j = 1; j <= m; j++){
+            ans.insert({i, j});
         }
     }
 
-    cout << -1 << '\n';
+    ans.erase({1,1});
+    vpii a;
+    a.pb({1,1});
 
+    while(!ans.empty()){
+        pii opt;
+        int dist = 0;
+        auto prev = a[(int)a.size() - 1];
+        for(auto i : ans){
+            int get = abs(i.F - prev.F) + abs(i.S - prev.S);
+            if(get > dist){
+                opt = i;
+                dist = get;
+            }
+        } 
+        a.pb(opt);
+        ans.erase(opt);
+
+    }
+
+    debug(a);
+
+    set<pii> oper;
+    for(int i = 1; i < n*m; i++){
+        pii diff = {a[i].F - a[i-1].F, a[i].S - a[i-1].S};
+        oper.insert(diff);
+    }
+    
+    cout << (int)oper.size();
 }
 signed main(){
     ios_base::sync_with_stdio(false);
@@ -114,7 +143,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

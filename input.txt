@@ -2,10 +2,11 @@
 using namespace std;
 
 #define pi 3.14
-
+#define p(y) y+y
 int main(){
     int ans = pi * pi;
-
+    iny y = 1;
+    int x = p(y) ;
     cout << pi == 3.14 << '\n';   
 
     return 0;

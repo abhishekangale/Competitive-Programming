@@ -92,20 +92,27 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
+
+struct cmp{//custom comparator for set
+    bool operator()(const pii &p1, const pii &p2) const{
+        return (p1.F + p1.S) < (p2.F + p2.S);
+    }  
+};
+
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
-        }
+    int n;
+    cin >> n;
+    vi a(n);
+    for(auto &i : a)cin >> i;
+    multiset<pii, cmp> ms;
+    for(int i = 0; i < n - 1; i++){
+        ms.insert({a[i], a[i+1]});
     }
+    set<int> all;
+    
+    while(1){
 
-    cout << -1 << '\n';
-
+    }
 }
 signed main(){
     ios_base::sync_with_stdio(false);

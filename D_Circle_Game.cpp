@@ -92,19 +92,19 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
- 
-void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
-        }
-    }
 
-    cout << -1 << '\n';
+bool inside(int x, int y, int r){
+    return (x*x + y*y - r*r) <= 0;
+}
+void solve(){
+    double d, k;
+    cin >> d >> k;
+    double l = d / sqrt(2);
+    int cnt = l / k;
+    double dist = cnt*k;
+    
+    if(inside(dist, dist+k, d))cout << "Ashish\n";
+    else cout << "Utkarsh\n";
 
 }
 signed main(){

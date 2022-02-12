@@ -94,17 +94,42 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int n, q;
+    cin >> n >> q;
+    vi a(n);
+    for(auto &i : a)cin >> i;
+    vpii queries(q);
+    for(auto &i : queries){
+        cin >> i.F >> i.S;
+    }
+    int ans = *max_element(all(a)) - *min_element(all(a));
+    vi out;
+    // let ith be the maximum in all
+    for(int i = 0; i < n; i++){
+        auto temp = a;
+        // debug(temp);
+        vi store;
+        for(int j = 0; j < q; j++){
+            if((i >= (queries[j].F - 1)) && (i <= (queries[j].S - 1)))continue;
+            store.pb(j+1);
+            for(int k = queries[j].F - 1; k < queries[j].S; k++){
+                temp[k]--;
+            }
+        }
+        // debug(store);
+       
+        int anstemp = temp[i] - *min_element(all(temp));
+        if(anstemp > ans){
+            ans = anstemp;
+            out = store;
         }
     }
 
-    cout << -1 << '\n';
+    cout << ans << '\n';
+    cout << (int)out.size() << '\n';
+    for(auto i : out){
+        cout << i << " ";
+    }
 
 }
 signed main(){
@@ -114,7 +139,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

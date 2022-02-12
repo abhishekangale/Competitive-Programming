@@ -94,17 +94,25 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int a, b;
+    cin >> a >> b;
+    int rem = a - b;
+    if(rem < 0)cout << 0;
+    else if(rem == 0)cout << "infinity";
+    else {
+        set<int> factors;
+        for(int i = 1; i*i <= rem; i++){
+            if(rem % i == 0){
+                factors.insert(i);
+                factors.insert(rem/i);
+            }
         }
-    }
 
-    cout << -1 << '\n';
+        int ans = 0;
+        for(auto i : factors)ans += i > b;
+
+        cout << ans;
+    }
 
 }
 signed main(){
@@ -114,7 +122,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

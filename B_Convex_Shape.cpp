@@ -94,17 +94,46 @@ void debug_out(Head H, Tail... T) {
 const int mod = 1e9 + 7;
  
 void solve(){
-    int l, r;
-    cin >> l >> r;
-    for(int i = l + 1; i <= r; i++){
-        int x = i - 1, y = i, xo = (x ^ y);
-        if(xo <= r && xo >= l && xo <= x){
-            cout << (x ^ y) << " " << x << " " << y << '\n';
-            return;
+    int n, m;
+    cin >> n >> m;
+    vector<vector<char>> a(n, vector<char>(m));
+    vpii black;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            cin >> a[i][j];
+            if(a[i][j] == 'B'){
+                black.pb({i, j});
+            }
         }
     }
 
-    cout << -1 << '\n';
+    int n_ = (int)black.size();
+    bool pos = 1;
+    for(int i = 0; i < n_; i++){
+        for(int j = i + 1; j < n_; j++){
+            bool f1 = 1, f2 = 1;
+            auto one = black[i], two = black[j];
+            for(int i_ = min(one.F, two.F); i_ <= max(one.F, two.F); i_++){
+                if(a[i_][one.S] == 'W')f1 = 0;
+            }
+            for(int i_ = min(one.F, two.F); i_ <= max(one.F, two.F); i_++){
+                if(a[i_][two.S] == 'W')f2 = 0;
+            }
+            for(int i_ = min(one.S, two.S); i_ <= max(one.S, two.S); i_++){
+                if(a[one.F][i_] == 'W')f2 = 0;
+            }
+            for(int i_ = min(one.S, two.S); i_ <= max(one.S, two.S); i_++){
+                if(a[two.F][i_] == 'W')f1 = 0;
+            }
+
+            if(!f1 && !f2){
+                cout << "NO";
+                return;
+            }
+        }
+    }
+
+    cout << "YES";
 
 }
 signed main(){
@@ -114,7 +143,7 @@ signed main(){
     cout << fixed << setprecision(10);
     
     int tt=1;
-    cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();
