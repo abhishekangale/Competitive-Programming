@@ -92,24 +92,37 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
-
+ 
 void solve(){
     int n;
     cin >> n;
-    cout << (1 << n) << '\n';
+    vi a(n);
+    for(auto &i : a)cin >> i;
+    int l = 0, r = 0;
+    for(int i = 0; i < n; i++){
+        if(a[i] != i + 1){
+            l = i;
+            break;
+        }
+    }
+    for(int i = 0; i < n; i++){
+        if(a[i] == l + 1){
+            r = i;
+            break;
+        }
+    }
+    reverse(a.begin() + l, a.begin() + r + 1);
+    for(auto i : a)cout << i << " ";
+    cout << '\n';
 }
 signed main(){
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
     cout << fixed << setprecision(10);
     
     int tt=1;
-    // cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

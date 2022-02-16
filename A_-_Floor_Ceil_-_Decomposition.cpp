@@ -91,18 +91,32 @@ void debug_out(Head H, Tail... T) {
  
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
-const int mod = 1e9 + 7;
-
+const int mod = 998244353;
+int x = 1;
+map<int,int> val;
+int mul(int y){
+    // debug(y);
+    if(y <= 3)return y;
+    int a, b;
+    if(val.find(y/2)!=val.end()){
+        a = val[y/2];
+    }
+    else a = mul(y/2);
+    if(val.find(y - y/2)!=val.end()){
+        b = val[y - y/2];
+    }
+    else b = mul(y - y/2);
+    val[y/2] = a;
+    val[y - y/2] = b;
+    return ((a%mod)*(b%mod)) % mod;
+    
+}
 void solve(){
-    int n;
-    cin >> n;
-    cout << (1 << n) << '\n';
+    int x;
+    cin >> x;
+    cout << mul(x);
 }
 signed main(){
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     

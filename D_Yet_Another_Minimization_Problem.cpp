@@ -93,23 +93,39 @@ void debug_out(Head H, Tail... T) {
  
 const int mod = 1e9 + 7;
 
+int calc(int n, vi a, vi b){
+    int ans = 0;
+    for(int i = 0; i < n; i++){
+        for(int j = i + 1; j < n; j++){
+            ans += (a[i] + a[j]) * (a[i] + a[j]);
+            ans += (b[i] + b[j]) * (b[i] + b[j]);
+        }
+    }
+    return ans;
+}
+
+void foo(vi &dp, int i, int n, vi &a, vi &b, int sum1, int sum2){
+    
+}   
+
+
 void solve(){
     int n;
     cin >> n;
-    cout << (1 << n) << '\n';
+    vi a(n) , b(n);
+    for(auto &i : a)cin >> i;
+    for(auto &i : b)cin >> i;
+    int ans = 0;
+    
 }
 signed main(){
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
     cout << fixed << setprecision(10);
     
     int tt=1;
-    // cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

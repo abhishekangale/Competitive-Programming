@@ -96,20 +96,52 @@ const int mod = 1e9 + 7;
 void solve(){
     int n;
     cin >> n;
-    cout << (1 << n) << '\n';
+    vi a(n);
+    for(auto &i : a)cin >> i;
+    vi x,y,z;
+    x = {a[0],0LL,0LL};
+    y = {0LL,a[0],0LL};
+    z = {0LL,0LL,a[0]};
+    for(int i = 1; i < n; i++){
+        int n = (int)x.size();
+        x.pb(a[i] - x[n-1] - x[n-2]);
+        y.pb(a[i] - y[n-1] - y[n-2]);
+        z.pb(a[i] - z[n-1] - z[n-2]);
+    }
+    bool f1 = 1, f2 = 1, f3 = 1;
+    for(int i = 0; i < (int)x.size(); i++){
+        if(x[i] < 0){
+            f1 = 0;
+        }
+        if(y[i] < 0){
+            f2 = 0;
+        }
+        if(z[i] < 0){
+            f3 = 0;
+        }
+    }
+
+    if(!f1 && !f2 && !f3){
+        cout << "No";
+        return;
+    }
+    cout << "Yes\n";
+    if(f1){
+        for(auto i : x)cout << i << " ";
+    }
+    else if(f2){
+        for(auto i : y)cout << i << " ";
+    }
+    else for(auto i : z)cout << i << " ";
 }
 signed main(){
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
     cout << fixed << setprecision(10);
     
     int tt=1;
-    // cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

@@ -92,24 +92,107 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
+int dx[] = {0, 0, 1, 1};
+int dy[] = {0, 1, 0, 1};
+bool poss(pii x, pii cur, vvi &a){
+    set<pair<int,int>> ff = {{cur.F, cur.S}, {cur.F + 1, cur.S}, {cur.F, cur.S + 1}, {cur.F, cur.S}};
+    for(int i = 0; i < 4; i++){
+        if(ff.find({x.F + dx[i], x.S + dy[i]}) != ff.end()) ff.erase({x.F + dx[i], x.S + dy[i]});
+    }
+    set<int> val;
+    for(auto i : ff){
+        val.insert(a[i.F][i.S]);
+    }
+    return (int)val.size() == 1;
+
+}
+
+int val(pii x, pii cur, vvi &a){
+    set<pair<int,int>> ff = {{cur.F, cur.S}, {cur.F + 1, cur.S}, {cur.F, cur.S + 1}, {cur.F, cur.S}};
+    for(int i = 0; i < 4; i++){
+        if(ff.find({x.F + dx[i], x.S + dy[i]}) != ff.end()) ff.erase({x.F + dx[i], x.S + dy[i]});
+    }
+    set<int> val;
+    for(auto i : ff){
+        val.insert(a[i.F][i.S]);
+    }
+    return *val.begin();
+
+}
 
 void solve(){
-    int n;
-    cin >> n;
-    cout << (1 << n) << '\n';
+    int n, m;
+    cin >> n >> m;
+    vvi a(n, vi (m));
+    for(auto &i :a){
+        for(auto &j : i){
+            cin >> j;
+        }
+    }
+    vvi vis(n - 1, vi (m - 1, 0));
+    queue<pair<pair<int,int>, int>> q;
+    for(int i = 0; i < n - 1; i++){
+        for(int j = 0; j < m - 1; j++){
+            if(a[i][j] == a[i][j+1] && a[i+1][j] == a[i+1][j+1] && a[i][j+1] == a[i+1][j]){
+                q.push({{i, j}, a[i][j]});
+            }
+        }
+    }
+
+    struct move{
+        int i, j, c;
+    };
+    vector<move> ans;
+    while(!q.empty()){
+        auto x = q.front();
+        q.pop();
+        ans.pb({x.F.F, x.F.S, x.S});
+        vis[x.F.F][x.F.S] = 1;
+        bool f = 0;
+        for(int i = max(0LL, x.F.F - 1); i <= min(x.F.F + 1, n - 2); i++){
+            for(int j = max(0LL, x.F.S - 1); j <= min(x.F.S + 1, m - 2); j++){
+                if(i == x.F.F && j == x.F.S)continue;
+                if(vis[i][j])continue;
+                if(poss({x.F.F, x.F.S}, {i, j}, a)){
+                    f = 1;
+                    q.push({{i, j}, val({x.F.F, x.F.S}, {i, j}, a)});
+                    int co = val({x.F.F, x.F.S}, {i, j}, a);
+                    a[i][j] = co;
+                    a[i + 1][j] = co;
+                    a[i][j + 1] = co;
+                    a[i + 1][j + 1] = co;
+                    // goto lol;
+                }
+            }
+        }
+        
+    }
+
+    // reverse(all(ans));
+    vvi b(n, vi(m, -1));
+    reverse(all(ans));
+    for(auto e : ans){
+        int x = e.i, y = e.j, co = e.c;
+        b[x][y] = co;
+        b[x+1][y] = co;
+        b[x][y+1] = co;
+        b[x+1][y+1] = co; 
+    }
+
+    debug(b);
+    for(auto e : ans){
+        cout << e.i << " " << e.j << " " << e.c << '\n';
+    }
+
 }
 signed main(){
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
     cout << fixed << setprecision(10);
     
     int tt=1;
-    // cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

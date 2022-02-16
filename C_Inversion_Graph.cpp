@@ -93,23 +93,55 @@ void debug_out(Head H, Tail... T) {
  
 const int mod = 1e9 + 7;
 
+vpii merge(vpii &intervals) {
+        vector<pii> ans;
+        sort(intervals.begin(), intervals.end());
+        pii tInterval = intervals[0];
+        
+        for (int i = 1; i < intervals.size(); i++) {
+            if (!(tInterval.S < intervals[i].F) and !(tInterval.F > intervals[i].S)) { // If overlapping
+                tInterval = { min(tInterval.F, intervals[i].F), max(tInterval.S, intervals[i].S) };
+                continue;
+            } else if (tInterval.S < intervals[i].F) {
+                ans.push_back(tInterval);
+            }
+            tInterval = intervals[i];
+        }
+        ans.push_back(tInterval);;
+        
+        return ans;
+}
+
 void solve(){
     int n;
     cin >> n;
-    cout << (1 << n) << '\n';
+    vi a(n);
+    for(auto &i : a)cin >> i;
+    vpii ranges;
+    vi suff(n);
+    int mn = LLONG_MAX;
+    for(int i = n - 1; i >= 0; i--){
+        mn = min(mn, a[i]);
+        suff[i] = mn;
+    }
+    
+    for(int i = 0; i < n; i++){
+        int lb = upper_bound(suff.begin() + i, suff.end(), a[i]) - suff.begin();
+        lb--;
+        ranges.pb({i, lb});
+    }
+
+    auto fin = merge(ranges);
+    cout << (int)fin.size() << '\n';
 }
 signed main(){
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
     cout << fixed << setprecision(10);
     
     int tt=1;
-    // cin >> tt;
+    cin >> tt;
     
     while(tt--){
         solve();

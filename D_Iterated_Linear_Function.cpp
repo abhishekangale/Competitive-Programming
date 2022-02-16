@@ -93,23 +93,44 @@ void debug_out(Head H, Tail... T) {
  
 const int mod = 1e9 + 7;
 
+long long binpow(long long a, long long b, long long m) {
+    a %= m;
+    long long res = 1;
+    while (b > 0) {
+        if (b & 1)
+            res = res * a % m;
+        a = a * a % m;
+        b >>= 1;
+    }
+    return res;
+}
+
+int sumgp(int n, int r){
+    return (binpow(r, n, mod) % mod;
+}
+
 void solve(){
-    int n;
-    cin >> n;
-    cout << (1 << n) << '\n';
+    int a, b, n, x;
+    if(a == 1){
+        int ans = b*n + x;
+        ans %= mod;
+        cout << ans;
+    }
+    else {
+        int ans = b * sumgp(n, a);
+        ans %= mod;
+        ans += (binpow(a, n, mod)*(x % mod)) % mod;
+        cout << ans;
+    }
 }
 signed main(){
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
     cout << fixed << setprecision(10);
     
     int tt=1;
-    // cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();

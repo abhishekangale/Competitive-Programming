@@ -92,24 +92,65 @@ void debug_out(Head H, Tail... T) {
 // Find Set LSB = (x&(-x)), isPowerOfTwo = (x & (x-1))
  
 const int mod = 1e9 + 7;
-
+bool cmp(pii a, pii b){
+    return a.S < b.S;
+}
 void solve(){
+    int k, l;
+    cin >> k >> l;
     int n;
     cin >> n;
-    cout << (1 << n) << '\n';
+    int pos = LLONG_MAX, neg = LLONG_MIN;
+    vi beesp, beesn;
+    for(int i = 0; i < n; i++){
+        int x, y;
+        cin >> x >> y;
+        if(y == 1)beesp.pb(x);
+        else beesn.pb(x);
+    }
+    int req = (k - l);
+    sort(all(beesp));
+    sort(all(beesn));
+    int m;
+    cin >> m;
+    vpii flowers;
+    for(int i = 0; i < m; i++){
+        int x, y;
+        cin >> x >> y;
+        int mn = LLONG_MAX;
+        auto ub = --upper_bound(all(beesp), x);
+        if(!beesp.empty() && beesp[0] <= x)mn = min(mn, x - *ub);
+        auto lb = lower_bound(all(beesn), x);
+        if(!beesn.empty() && beesn.back() >= x)mn = min(mn, *lb - x);
+        if(mn == LLONG_MAX)continue;
+        else {
+            if(mn <= req)flowers.pb({mn, y});
+        }
+    }
+    // debug(flowers);
+    if(req <= 0)cout << 0 << '\n';
+    else {
+        if(req > (int)flowers.size())cout << -1 << '\n';
+        else {
+            int ans = 0;
+            sort(all(flowers), cmp);
+            for(int i = 0; i < req; i++){
+                ans += flowers[i].S;
+            }
+
+            cout << ans << '\n';
+        }
+    }
+
 }
 signed main(){
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
     cout << fixed << setprecision(10);
     
     int tt=1;
-    // cin >> tt;
+    //cin >> tt;
     
     while(tt--){
         solve();
